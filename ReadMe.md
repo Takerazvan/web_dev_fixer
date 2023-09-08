@@ -1,5 +1,5 @@
 # CodePen Clone App
-![image](https://github.com/Takerazvan/web_dev_fixer/assets/108169843/b8c42bff-238a-4db5-ad45-7e34bf28e92a)
+![Imgur](https://imgur.com/a/IrZTbZZ)
 
 ## Description
 
