@@ -1,5 +1,5 @@
 # CodePen Clone App
-![Imgur](https://imgur.com/a/IrZTbZZ)
+![Imgur](https://i.imgur.com/GlqILyL.png)
 
 ## Description
 
@@ -46,7 +46,7 @@ We welcome contributions to the CodePen Clone project. Please follow the [contri
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-![Imgur](https://imgur.com/a/iLSLTb8)
+![Imgur](https://i.imgur.com/svXdE1q.png)
 
 
 
