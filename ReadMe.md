@@ -1,5 +1,5 @@
 # CodePen Clone App
-![Imgur](https://imgur.com/a/GW9q18i)
+![Imgur](https://imgur.com/a/GW9q18i.png)
 ## Description
 
 This is a CodePen Clone app, a web-based IDE for front-end designers and developers. It provides a platform where users can create HTML, CSS, and JavaScript code snippets, also known as 'pens', and see the live preview of their code. It's a great tool for testing, showcasing, and sharing front-end code.
