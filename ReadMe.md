@@ -11,7 +11,7 @@ This is a CodePen Clone app, a web-based IDE for front-end designers and develop
 2. **Multi-Language Support**: Supports HTML, CSS, and JavaScript.
 3. **Save Pens**: Users can save their 'pens' for future reference and modification.
 4. **Dark Mode Interface**: Offers a dark mode interface to ease the strain on the eyes and enhance the coding experience.
-5. **Responsive Design**: The app's layout is designed to work well on both desktop and mobile browsers.
+5. **Responsive Design**: The app's layout is designed to work well on both desktop and mobile browsers.(Work in progress)
 
 ## Installation and Setup
 
@@ -21,6 +21,27 @@ This is a CodePen Clone app, a web-based IDE for front-end designers and develop
 4. Run the application: npm start
 
 5. The application should now be running at `http://localhost:3000`.
+
+
+   
+## Backend
+
+The backend of this application is developed using Java Spring Boot, offering a robust framework to build the server-side of the application. It interacts with PostgreSQL database to store and manage the user-created pens. Here is the basic setup guide:
+
+### Setting up the Backend
+
+1. Install [Java JDK](https://www.oracle.com/java/technologies/javase-jdk15-downloads.html) (version 15 or later).
+2. Install [Maven](https://maven.apache.org/) (for dependency management).
+3. Set up your Spring Boot application by following the [official guide](https://spring.io/guides/gs/spring-boot/).
+
+## Database
+
+The project uses PostgreSQL as its database system. Follow these steps to set it up:
+
+1. Install [PostgreSQL](https://www.postgresql.org/download/) and set up a new database.
+2. Configure your `application.properties` file in your Spring Boot application to connect to your PostgreSQL database. 
+
+
 
 ## Usage
 
