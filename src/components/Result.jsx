@@ -31,7 +31,7 @@ export default function Result({
       id="test"
       style={{
         backgroundColor: "#212121",
-        height: "50vh",
+        height: "65vh",
         marginTop: "50px",
         marginBottom: "30px",
         borderRadius: "20px",

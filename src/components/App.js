@@ -8,6 +8,7 @@ import NavBar from './NavBar';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Home';
 import LoginRegsiter from './LoginRegsiter';
+import Register from './Register';
 
 function App() {
   const [html, setHtml] = useLocalStorage('html', '')
@@ -37,9 +38,10 @@ function App() {
         {/* <Test /> */}
         <div>
           <Routes>
-            <Route path="/" element={<Home/>}></Route>
+            <Route path="/" element={<Home />}></Route>
             <Route path="/components/buttons" element={<Test />} />
             <Route path="/login" element={<LoginRegsiter />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
       </Router>

@@ -20,16 +20,46 @@ function Test() {
  useEffect(() => {
    const timeout = setTimeout(() => {
      setSrcDoc(`
-        <html>
-          <body>${html}</body>
-          <style>${css}</style>
-          <script>${js}</script>
-        </html>
+         <html>
+         <body style="display: flex; justify-content: center; align-items: center; height: 100vh;overflow: hidden;">
+           ${html}
+         </body>
+         <style>
+           ${css}
+         </style>
+         <script>
+           ${js}
+         </script>
+       </html>
       `);
    }, 250);
 
    return () => clearTimeout(timeout);
  }, [html, css, js]);
+  
+  const [title, setTitle] = useState("Pen");
+
+  const savePen = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/users/addpen", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: 1,
+          title,
+          html,
+          css,
+          js,
+        }),
+      });
+      const data = await response.json();
+      console.log("Success:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <Container className="border-none rounded-x2 overflow-hidden max-w-full">
@@ -55,7 +85,7 @@ function Test() {
           />
         </Col>
 
-        <Col id="test" className="resize" style={{height:"65vh"}}>
+        <Col id="test" className="resize" style={{ height: "65vh" }}>
           <br />
           <Tabs
             activePanel={activePanel}
@@ -82,6 +112,15 @@ function Test() {
             srcDoc={srcDoc}
             setSrcDoc={setSrcDoc}
           />
+          <br />
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Pen Title"
+          />
+
+          <button onClick={savePen}>Save Pen</button>
         </Col>
       </Row>
     </Container>

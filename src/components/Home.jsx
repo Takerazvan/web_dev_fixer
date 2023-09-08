@@ -8,6 +8,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import Result from "./Result";
 
 export default function Home() {
+  const [pens, setPens] = useState([]);
   const [activePanel, setActivePanel] = useState("html");
   const [html, setHtml] = useLocalStorage("html", "");
   const [css, setCss] = useLocalStorage("css", "");
@@ -15,13 +16,28 @@ export default function Home() {
   const [srcDoc, setSrcDoc] = useState("");
 
   useEffect(() => {
+    fetch("http://localhost:8000/api/pens")
+      .then((response) => response.json())
+      .then((data) => setPens(data))
+      .catch((error) =>
+        console.error("There was an error fetching the pens!", error)
+      );
+  }, []);
+
+  useEffect(() => {
     const timeout = setTimeout(() => {
       setSrcDoc(`
-        <html>
-          <body>${html}</body>
-          <style>${css}</style>
-          <script>${js}</script>
-        </html>
+           <html>
+         <body style="display: flex; justify-content: center; align-items: center; height: 100vh;overflow: hidden;">
+           ${html}
+         </body>
+         <style>
+           ${css}
+         </style>
+         <script>
+           ${js}
+         </script>
+       </html>
       `);
     }, 250);
 
@@ -52,23 +68,38 @@ export default function Home() {
     <div style={{ marginTop: "10vh", backgroundColor: "#212121" }}>
       <Container>
         <Row xs={2} md={4} lg={3} className="g-3">
-          {cardData.map((card, index) => (
-            <Col key={index}>
+          {pens.map((pen, index) => (
+            <Col key={index} data={pen}>
               <Card
                 id="test"
                 style={{ width: "22rem", backgroundColor: "#212121" }}
               >
-                <Card.Body>
+                <Card.Body class="card-body ">
+                  <p style={{ color: "white", textAlign: "center" }}>
+                    {pen.title || "CATEGORY"}
+                  </p>
                   <Result
                     activePanel={activePanel}
                     setActivePanel={setActivePanel}
-                    html={html}
+                    html={pen.html}
                     setHtml={setHtml}
-                    css={css}
+                    css={pen.css}
                     setCss={setCss}
-                    js={js}
+                    js={pen.js}
                     setJs={setJs}
-                    srcDoc={srcDoc}
+                    srcDoc={`
+                      <html>
+                        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; ">
+                          ${pen.html}
+                        </body>
+                        <style>
+                          ${pen.css}
+                        </style>
+                        <script>
+                          ${pen.js}
+                        </script>
+                      </html>
+                    `}
                     setSrcDoc={setSrcDoc}
                   />
                 </Card.Body>

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import 'codemirror/lib/codemirror.css'
 import "codemirror/theme/base16-dark.css";
 import "codemirror/theme/the-matrix.css";
+import "codemirror/mode/sass/sass.js";
+import "codemirror/mode/pug/pug.js";
 import 'codemirror/mode/xml/xml'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/mode/css/css'
