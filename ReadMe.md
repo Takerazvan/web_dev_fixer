@@ -46,6 +46,7 @@ We welcome contributions to the CodePen Clone project. Please follow the [contri
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+![Imgur](https://imgur.com/a/iLSLTb8)
 
 
 
