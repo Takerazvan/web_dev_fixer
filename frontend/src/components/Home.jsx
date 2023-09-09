@@ -44,28 +44,10 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [html, css, js]);
 
-  const cardData = [
-    {
-      title: "Card 1",
-      text: "Some quick example text for Card 1.",
-    },
-    {
-      title: "Card 2",
-      text: "Some quick example text for Card 2.",
-    },
-    {
-      title: "Card 3",
-      text: "Some quick example text for Card 3.",
-    },
-    {
-      title: "Card 4",
-      text: "Some quick example text for Card 4.",
-    },
-    // Add more card data as needed
-  ];
+
 
   return (
-    <div style={{ marginTop: "10vh", backgroundColor: "#212121" }}>
+    <div style={{ marginTop: "5vh", backgroundColor: "#212121" }}>
       <Container>
         <Row xs={2} md={4} lg={3} className="g-3">
           {pens.map((pen, index) => (
@@ -74,7 +56,7 @@ export default function Home() {
                 id="test"
                 style={{ width: "22rem", backgroundColor: "#212121" }}
               >
-                <Card.Body class="card-body ">
+                <Card.Body className="card-body">
                   <p style={{ color: "white", textAlign: "center" }}>
                     {pen.title || "CATEGORY"}
                   </p>

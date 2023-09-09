@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-
+import { savePen } from "../hooks/savePen";
 
 function Test() {
   const [activePanel, setActivePanel] = useState("html");
@@ -21,7 +21,7 @@ function Test() {
    const timeout = setTimeout(() => {
      setSrcDoc(`
          <html>
-         <body style="display: flex; justify-content: center; align-items: center; height: 100vh;overflow: hidden;">
+       <body style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; box-sizing: border-box; overflow: auto;">
            ${html}
          </body>
          <style>
@@ -70,7 +70,7 @@ function Test() {
           borderRadius: "20px",
         }}
       >
-        <Col md={5}>
+        <Col md={5} >
           <Result
             activePanel={activePanel}
             setActivePanel={setActivePanel}
@@ -85,7 +85,7 @@ function Test() {
           />
         </Col>
 
-        <Col id="test" className="resize" style={{ height: "65vh" }}>
+        <Col id="test" className="resize" style={{ height: "65vh",overflow:"auto" }}>
           <br />
           <Tabs
             activePanel={activePanel}
@@ -120,7 +120,7 @@ function Test() {
             placeholder="Pen Title"
           />
 
-          <button onClick={savePen}>Save Pen</button>
+          <button onClick={savePen}>Save Component</button>
         </Col>
       </Row>
     </Container>
