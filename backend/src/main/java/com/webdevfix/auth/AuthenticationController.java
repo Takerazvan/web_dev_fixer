@@ -29,6 +29,7 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.register(request));
         } catch (Exception e) {
+
             throw new CustomException("Registration failed", e);
         }
     }

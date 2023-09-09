@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
+
     public ResponseEntity<String> handleCustomException(CustomException e) {
 
         Logger.getLogger("GlobalExceptionHandler").info(e.getMessage());

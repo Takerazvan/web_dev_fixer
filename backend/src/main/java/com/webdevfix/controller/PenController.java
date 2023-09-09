@@ -19,6 +19,7 @@ public class PenController {
         return penService.createPen(penComponent);
     }
 
+
     @GetMapping("/{id}")
     public PenComponent getPen(@PathVariable Long id) {
         return penService.getPenById(id);

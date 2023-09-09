@@ -38,6 +38,7 @@ public class AuthenticationService {
 
         if (userRepository.existsByEmail(request.email())) {
             throw new IllegalArgumentException("User already registered");
+
         }
         String hashedPassword = passwordEncoder.encode(request.password());
         var user = User.builder()
