@@ -35,8 +35,8 @@ public class PenController {
         return penService.updatePen(id, penComponent);
     }
 
-//    @DeleteMapping("/{id}")
-//    public void deletePen(@PathVariable Long id) {
-//        penService.deletePen(id);
-//    }
+    @DeleteMapping("/{id}")
+    public void deletePen(@PathVariable Long id) {
+        penService.deletePen(id);
+    }
 }

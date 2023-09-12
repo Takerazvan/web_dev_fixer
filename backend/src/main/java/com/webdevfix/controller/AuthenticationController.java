@@ -1,17 +1,21 @@
-package com.webdevfix.auth;
+package com.webdevfix.controller;
 
 
-import com.webdevfix.dto.AuthenticationResponseDTO;
-import com.webdevfix.dto.RegisterRequestDTO;
+import com.webdevfix.auth.AuthenticationRequest;
+import com.webdevfix.auth.AuthenticationResponse;
+import com.webdevfix.auth.AuthenticationService;
+import com.webdevfix.auth.RegisterRequest;
+
 import com.webdevfix.exceptions.CustomException;
 
+import com.webdevfix.mapper.AuthenticationMapper;
 import com.webdevfix.service.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,7 +26,7 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
     private final LogoutService logoutService;
-//    private final AuthenticationMapper mapper;
+   private final AuthenticationMapper mapper;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request ) {

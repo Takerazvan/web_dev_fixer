@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import "../components/index.css"
+import React, { useState, useEffect } from "react";
+import "../components/index.css";
 import Tabs from "./Tabs";
 import Editor from "./Editor";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -10,16 +10,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { savePen } from "../hooks/savePen";
-
+import { useAtom } from "jotai";
+import { htmlAtom,cssAtom,jsAtom } from "../hooks/Atom";
 function Test() {
   const [activePanel, setActivePanel] = useState("html");
-  const [html, setHtml] = useLocalStorage("html", "");
-  const [css, setCss] = useLocalStorage("css", "");
-  const [js, setJs] = useLocalStorage("js", "");
+  const [html, setHtml] = useAtom(htmlAtom);
+  const [css, setCss] = useAtom(cssAtom);
+  const [js, setJs] = useAtom(jsAtom);
+
+  
   const [srcDoc, setSrcDoc] = useState("");
- useEffect(() => {
-   const timeout = setTimeout(() => {
-     setSrcDoc(`
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSrcDoc(`
          <html>
        <body style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; box-sizing: border-box; overflow: auto;">
            ${html}
@@ -32,11 +35,11 @@ function Test() {
          </script>
        </html>
       `);
-   }, 250);
+    }, 250);
 
-   return () => clearTimeout(timeout);
- }, [html, css, js]);
-  
+    return () => clearTimeout(timeout);
+  }, [html, css, js]);
+
   const [title, setTitle] = useState("Pen");
 
   const savePen = async () => {
@@ -62,7 +65,7 @@ function Test() {
   };
 
   return (
-    <Container className="border-none rounded-x2 overflow-hidden max-w-full">
+    <Container className="border-none rounded-x2 overflow-hidden">
       <Row
         style={{
           backgroundColor: "#212121",
@@ -70,7 +73,7 @@ function Test() {
           borderRadius: "20px",
         }}
       >
-        <Col md={5} >
+        <Col md={6}>
           <Result
             activePanel={activePanel}
             setActivePanel={setActivePanel}
@@ -85,7 +88,7 @@ function Test() {
           />
         </Col>
 
-        <Col id="test" className="resize" style={{ height: "65vh",overflow:"auto" }}>
+        <Col id="test" className="resize" style={{ overflow: "auto" }}>
           <br />
           <Tabs
             activePanel={activePanel}
@@ -113,14 +116,22 @@ function Test() {
             setSrcDoc={setSrcDoc}
           />
           <br />
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Pen Title"
-          />
-
-          <button onClick={savePen}>Save Component</button>
+        
+          <div
+            class="input-container"
+            style={{ width: "30vh", maxWidth: "auto", marginLeft: "50px" }}
+          >
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Name"
+            />
+            <button onClick={savePen} class="button">
+              Add
+            </button>
+          </div>
+       
         </Col>
       </Row>
     </Container>

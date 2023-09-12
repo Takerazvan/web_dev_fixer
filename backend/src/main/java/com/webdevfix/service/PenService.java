@@ -35,4 +35,7 @@ public class PenService {
                 .orElse(null);
     }
 
+    public void deletePen(Long id) {
+        penRepository.deleteById(id);
+    }
 }

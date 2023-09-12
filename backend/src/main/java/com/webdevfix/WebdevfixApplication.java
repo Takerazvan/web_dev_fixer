@@ -22,10 +22,10 @@ public class WebdevfixApplication {
 	public CommandLineRunner demoData(UserService userService) {
 		return args -> {
 			User mockUser = User.builder()
-					.first_name("John")
-					.last_name("Doe")
-					.email("john.doe@example.com")
-					.password("12345")
+					.first_name("Razvan")
+					.last_name("T")
+					.email("razv@gmail.com")
+					.password("password")
 
 					.penComponents(new ArrayList<>())
 

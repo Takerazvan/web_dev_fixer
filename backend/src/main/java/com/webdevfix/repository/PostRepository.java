@@ -13,7 +13,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long postId);
 
 
-    // Other methods for retrieving, updating, and deleting posts
+    //TODO Other methods for retrieving, updating, and deleting posts
 
-    // No need for the addPost method
+
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Editor from './Editor'
+
 import useLocalStorage from '../hooks/useLocalStorage'
 import Test from './Test';
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css"; 
 import Footer from './Footer';
 import NavBar from './NavBar';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -40,6 +40,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/components/buttons" element={<Test />} />
+            <Route path="/test" element={<Test/>} />
             <Route path="/login" element={<LoginRegsiter />} />
             <Route path="/register" element={<Register />} />
           </Routes>
