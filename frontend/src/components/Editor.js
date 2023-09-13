@@ -8,8 +8,7 @@ import 'codemirror/mode/xml/xml'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/mode/css/css'
 import { Controlled as ControlledEditor } from 'react-codemirror2'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Editor(props) {
   const {
@@ -21,7 +20,7 @@ export default function Editor(props) {
 
   const [themeColor, setThemeColor] = useState("base16-dark");
   const changeTheme = () => {
-    if (themeColor == "base16-dark") {
+    if (themeColor === "base16-dark") {
       setThemeColor("the-matrix");
       
     } else {
@@ -29,7 +28,7 @@ export default function Editor(props) {
     }
   }
 
-  function handleChange(editor, data, value) {
+  function handleChange(value) {
     onChange(value)
   }
 
@@ -41,20 +40,22 @@ export default function Editor(props) {
           backgroundColor: "#212121",
           color: "rgb(192, 255, 20)",
           display: "flex",
-          justifyContent: "space-between", // Align items on the edges
-          alignItems: "center", // Center vertically
+          justifyContent: "space-between",
+          alignItems: "center",
           padding: "10px",
+          
         }}
       >
         {displayName}
 
-        <label class="switch">
+        <label className="switch">
           <input onChange={changeTheme} type="checkbox" />
-          <span class="slider"></span>
+          <span className="slider"></span>
         </label>
       </div>
 
       <ControlledEditor
+      
         onBeforeChange={handleChange}
         value={value}
         className="code-mirror-wrapper"

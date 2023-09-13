@@ -1,5 +1,5 @@
 import React from 'react'
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
+
 export default function Footer() {
   return (
     <div class="card text-center" style={{ backgroundColor: "black",height:"30vh" }}>

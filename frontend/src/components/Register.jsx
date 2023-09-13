@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { registerUser } from "../hooks/registerUser";
 export default function Register() {
   const [formData, setFormData] = useState({
     first_name: "",

@@ -10,9 +10,9 @@ function NavBar() {
     <Navbar expand="lg" style={{ backgroundColor: "#212121" }}>
       <Container id="test" style={{ backgroundColor: "#212121" }}>
         <Navbar.Brand href="#home" style={{ color: "white" }} id="brand">
-          <button data-text="Awesome" class="brand">
-            <span class="actual-text">&nbsp;WebDevFixer&nbsp;</span>
-            <span class="hover-text" aria-hidden="true">
+          <button data-text="Awesome" className="brand">
+            <span className="actual-text">&nbsp;WebDevFixer&nbsp;</span>
+            <span className="hover-text" aria-hidden="true">
               &nbsp;WebDevFixer&nbsp;
             </span>
           </button>

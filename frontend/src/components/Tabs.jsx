@@ -1,39 +1,22 @@
-import React, { useState } from 'react'
-import useLocalStorage from "../hooks/useLocalStorage";
+import React from 'react'
+
 
 export default function Tabs({
-  activePanel,
-  setActivePanel,
-  html,
-  setHtml,
-  css,
-  setCss,
-  js,
-  setJs,
-  srcDoc,
-  setSrcDoc
+
+  setActivePanel
+
 }) {
 
 
   return (
-    // <div className="sidebar">
-    //   <button className="tab-button" onClick={() => setActivePanel("html")}>
-    //     HTML
-    //   </button>
-    //   <button className="tab-button" onClick={() => setActivePanel("css")}>
-    //     CSS
-    //   </button>
-    //   <button className="tab-button" onClick={() => setActivePanel("js")}>
-    //     JS
-    //   </button>
-    // </div>
+  
     <nav
-      class="navbar-nav justify-content-center "
+      className="navbar-nav justify-content-center "
       style={{ borderRadius: "10px", textAlign: "center" }}
     >
-      <form class="form-inline">
+      <form className="form-inline">
         <button
-          class="btn btn-dark"
+          className="btn btn-dark"
           variant="outline-warning"
           type="button"
           onClick={() => setActivePanel("html")}
@@ -42,7 +25,7 @@ export default function Tabs({
           HTML
         </button>
         <button
-          class="btn btn-dark"
+          className="btn btn-dark"
           type="button"
           onClick={() => setActivePanel("css")}
           id="test"
@@ -50,7 +33,7 @@ export default function Tabs({
           CSS
         </button>
         <button
-          class="btn btn-dark"
+          className="btn btn-dark"
           type="button"
           onClick={() => setActivePanel("js")}
           id="test"

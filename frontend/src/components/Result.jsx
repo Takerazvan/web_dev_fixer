@@ -1,31 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import useLocalStorage from '../hooks/useLocalStorage';
+import React, { useEffect, useState } from "react";
+import { generateSrcDoc } from "../hooks/generateSrcDoc";
 
-export default function Result({
- 
-  html,
- 
-  css,
-  
-  js,
- 
-  srcDoc,
-  setSrcDoc
-}) {
+export default function Result({ html, css, js }) {
+  const [srcDoc, setSrcDoc] = useState("");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setSrcDoc(`
-        <html>
-          <body>${html}</body>
-          <style>${css}</style>
-          <script>${js}</script>
-        </html>
-      `);
+      setSrcDoc(generateSrcDoc(html, css, js));
     }, 250);
 
     return () => clearTimeout(timeout);
   }, [html, css, js]);
+
   return (
     <div
       id="test"

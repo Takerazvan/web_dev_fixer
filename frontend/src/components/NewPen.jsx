@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import "../components/index.css";
 import Tabs from "./Tabs";
 
@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 import { useSelector, useDispatch } from "react-redux";
 import { addPen } from "../hooks/addPen";
 
-function Test() {
+function NewPen() {
   const dispatch = useDispatch();
 
   const html = useSelector((state) => state.html);
@@ -18,16 +18,16 @@ function Test() {
   const js = useSelector((state) => state.js);
 
   const [activePanel, setActivePanel] = useState("html");
- 
+
   const [title, setTitle] = useState("Pen");
 
-  const setHtml = (newHtml) => dispatch({ type: "UPDATE_HTML", payload: newHtml });
+  const setHtml = (newHtml) =>
+    dispatch({ type: "UPDATE_HTML", payload: newHtml });
 
   const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
 
   const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
 
-  
   const savePen = async () => {
     try {
       const penDetails = {
@@ -43,7 +43,11 @@ function Test() {
       console.error("Error:", error);
     }
   };
-
+  useEffect(() => {
+    dispatch({ type: "UPDATE_HTML", payload: "" });
+    dispatch({ type: "UPDATE_CSS", payload: "" });
+    dispatch({ type: "UPDATE_JS", payload: "" });
+  }, [dispatch]);
   return (
     <Container className="border-none rounded-x2 overflow-hidden">
       <Row
@@ -79,12 +83,26 @@ function Test() {
             js={js}
             setJs={setJs}
           />
-          
-        
+          <br />
+
+          <div
+            className="input-container"
+            style={{ width: "30vh", maxWidth: "auto", marginLeft: "50px" }}
+          >
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Name"
+            />
+            <button onClick={savePen} className="button">
+              Add
+            </button>
+          </div>
         </Col>
       </Row>
     </Container>
   );
 }
 
-export default Test;
+export default NewPen;
