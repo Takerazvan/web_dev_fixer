@@ -11,8 +11,7 @@ This is a CodePen Clone app, a web-based IDE for front-end designers and develop
 2. **Multi-Language Support**: Supports HTML, CSS, and JavaScript.
 3. **Save Pens**: Users can save their 'pens' for future reference and modification.
 4. **Dark Mode Interface**: Offers a dark mode interface to ease the strain on the eyes and enhance the coding experience.
-5. **Responsive Design**: The app's layout is designed to work well on both desktop and mobile browsers.(Work in progress)
-
+5. **Responsive Design**: The app's layout is designed to work well on both desktop and mobile browsers.
 ## Installation and Setup
 
 1. Clone the repository:
