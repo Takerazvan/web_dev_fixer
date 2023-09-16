@@ -20,7 +20,14 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
+setFormData({
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
     // TODO: Add validation before sending data
 
     try {

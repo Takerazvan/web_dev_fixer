@@ -3,10 +3,12 @@ import { generateSrcDoc } from "../hooks/generateSrcDoc";
 
 export default function Result({ html, css, js }) {
   const [srcDoc, setSrcDoc] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSrcDoc(generateSrcDoc(html, css, js));
+        setLoading(false);
     }, 250);
 
     return () => clearTimeout(timeout);
@@ -22,8 +24,19 @@ export default function Result({ html, css, js }) {
         marginBottom: "30px",
         borderRadius: "20px",
         overflow: "hidden",
+        position: "relative",
       }}
     >
+      {loading && (
+        <div
+          class="loader"
+          style={{ position: "absolute", top: "50%", left: "30%" }}
+        >
+          <div data-glitch="Loading..." className="glitch">
+            Loading...
+          </div>
+        </div>
+      )}
       <iframe
         srcDoc={srcDoc}
         title="output"

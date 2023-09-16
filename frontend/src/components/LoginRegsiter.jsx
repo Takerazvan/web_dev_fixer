@@ -51,12 +51,13 @@ const dispatch = useDispatch();
           />
           <label>Username</label>
         </div>
+        
         <div className="user-box">
           <input
+            required
             className="input"
             type="password"
             name="password"
-            id="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
