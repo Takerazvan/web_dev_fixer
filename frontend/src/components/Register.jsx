@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { registerUser } from "../hooks/registerUser";
+import PasswordChecklist from "react-password-checklist";
 export default function Register() {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -41,75 +42,101 @@ export default function Register() {
   };
 
   return (
-    <form className="form3" onSubmit={handleSubmit}>
-      <p className="title">Register</p>
-      <p className="message">Signup now and get full access to our app.</p>
-      <div className="flex">
-        <label>
-          <input
-            className="input"
-            type="text"
-            placeholder="First Name"
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          <input
-            className="input"
-            type="text"
-            placeholder="Last Name"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleChange}
-            required
-          />
-        </label>
+    <>
+      <div className="login-box mt-4" style={{height:"82vh"}}>
+        <form onSubmit={handleSubmit}>
+          <div className="user-box">
+            <input
+              required
+              className="input"
+              type="text"
+              name="first_name"
+              placeholder="First Name"
+              value={formData.first_name}
+              onChange={handleChange}
+            />
+            <label>First Name</label>
+          </div>
+
+          <div className="user-box">
+            <input
+              required
+              className="input"
+              type="text"
+              name="last_name"
+              placeholder="Last Name"
+              value={formData.last_name}
+              onChange={handleChange}
+            />
+            <label>Last Name</label>
+          </div>
+
+          <div className="user-box">
+            <input
+              required
+              className="input"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <label>Email</label>
+          </div>
+
+          <div className="user-box">
+            <input
+              required
+              className="input"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <label>Password</label>
+          </div>
+
+          <div className="user-box">
+            <input
+              required
+              className="input"
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            <label>Confirm Password</label>
+          </div>
+
+          <center>
+            <button
+              type="submit"
+              className="test"
+              style={{ backgroundColor: "grey" }}
+            >
+              REGISTER
+              <span></span>
+            </button>
+            <PasswordChecklist
+              rules={["minLength", "specialChar", "number", "capital", "match"]}
+              minLength={8}
+              value={formData.password}
+              valueAgain={formData.confirmPassword}
+              messages={{
+                minLength: "Password must be at least 8 characters.",
+                specialChar: "Password must contain a special character.",
+                number: "Password must contain a number.",
+                capital: "Password must contain an uppercase letter.",
+                match: "Passwords match.",
+              }}
+              onChange={(isValid) => {}}
+              style={{ color: "white",fontSize:"10px" }}
+            />
+          </center>
+        </form>
       </div>
-
-      <label>
-        <input
-          className="input"
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-
-      <label>
-        <input
-          id="test"
-          className="input"
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        <input
-          className="input"
-          type="password"
-          placeholder="Confirm Password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <button className="submit" type="submit">
-        Submit
-      </button>
-      <p className="signin">
-        Already have an account? <a href="#">Sign in</a>{" "}
-      </p>
-    </form>
+    </>
   );
 }

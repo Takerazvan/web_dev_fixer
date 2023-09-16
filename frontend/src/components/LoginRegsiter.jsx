@@ -51,7 +51,7 @@ const dispatch = useDispatch();
           />
           <label>Username</label>
         </div>
-        <div class="user-box">
+        <div className="user-box">
           <input
             className="input"
             type="password"
