@@ -50,13 +50,10 @@ export default function Home() {
                 className="bg-dark text-white test"
               >
                 <Card.Body>
-                  <p className="text-center">{pen.title}</p>
-                  <Result
-                    html={pen.html}
-                    css={pen.css}
-                    js={pen.js}
-                   
-                  />
+                  <p className="text-center neonText" id="card-title-home">
+                    {pen.title}
+                  </p>
+                  <Result html={pen.html} css={pen.css} js={pen.js} />
                 </Card.Body>
               </Card>
             </Link>

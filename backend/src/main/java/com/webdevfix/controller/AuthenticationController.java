@@ -9,6 +9,7 @@ import com.webdevfix.auth.RegisterRequest;
 import com.webdevfix.exceptions.CustomException;
 
 import com.webdevfix.mapper.AuthenticationMapper;
+import com.webdevfix.notifications.EmailService;
 import com.webdevfix.service.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,20 +28,21 @@ public class AuthenticationController {
     private final AuthenticationService service;
     private final LogoutService logoutService;
    private final AuthenticationMapper mapper;
-
+private final EmailService emailService;
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request ) {
         try {
             return ResponseEntity.ok(service.register(request));
         } catch (Exception e) {
 
-            throw new CustomException("Registration failed", e);
+            throw new CustomException("Registration failed", e.getCause());
         }
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login( @RequestBody AuthenticationRequest request ) {
         try {
+
             return ResponseEntity.ok(service.authenticate(request));
         } catch (Exception e) {
             throw new CustomException("Login failed", e);

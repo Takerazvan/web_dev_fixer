@@ -34,7 +34,9 @@ export default function Register() {
       const result = await response.json();
       console.log("Success:", result);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
+      alert("User already registered");
+
     }
   };
 
@@ -81,6 +83,7 @@ export default function Register() {
 
       <label>
         <input
+          id="test"
           className="input"
           type="password"
           placeholder="Password"

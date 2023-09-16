@@ -9,9 +9,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Home';
 import LoginRegsiter from './LoginRegsiter';
 import Register from './Register';
+import { useSelector } from 'react-redux';
 
 function App() {
-
+  const isLoggedIn = useSelector((state) => state.loggedIn); 
+  console.log(isLoggedIn)
 
   return (
     <>
@@ -25,7 +27,11 @@ function App() {
             <Route path="/test" element={<Test />} />
             <Route path="/login" element={<LoginRegsiter />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/newpen" element={<NewPen/>} />
+            {isLoggedIn ? (
+              <Route path="/newpen" element={<NewPen />} />
+            ) : (
+             null
+            )}
           </Routes>
         </div>
       </Router>

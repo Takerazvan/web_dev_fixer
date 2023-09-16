@@ -30,6 +30,7 @@ public class User implements UserDetails {
 
     private String first_name, last_name, email, password;
 
+
     @Enumerated
     private Role role;
     @Override
@@ -74,4 +75,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

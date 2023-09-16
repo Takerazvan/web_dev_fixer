@@ -6,6 +6,7 @@ const initialState = {
   html: "",
   css: "",
   js: "",
+  loggedIn: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, css: action.payload };
     case "UPDATE_JS":
       return { ...state, js: action.payload };
+    case "SET_LOGGED_IN": 
+      return { ...state, loggedIn: action.payload };
     default:
       return state;
   }

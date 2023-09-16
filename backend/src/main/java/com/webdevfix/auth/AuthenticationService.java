@@ -4,6 +4,7 @@ package com.webdevfix.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webdevfix.model.Role;
 import com.webdevfix.model.User;
+import com.webdevfix.notifications.EmailService;
 import com.webdevfix.repository.TokenRepository;
 import com.webdevfix.repository.UserRepository;
 import com.webdevfix.service.JwtService;
@@ -33,6 +34,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;;
     public AuthenticationResponse register(RegisterRequest request) {
 
 
@@ -50,6 +52,8 @@ public class AuthenticationService {
                 .build();
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        var verificationLink= "http://localhost:8080/verify?token=" + jwtToken;
+        emailService.send(savedUser.getEmail(), verificationLink);
 
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
@@ -72,10 +76,14 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
 
+            System.out.println(user.isAccountNonLocked());
+//if (!user.isEnabled()){
+//    throw new IllegalStateException("Email not verified");
+//}
         saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
+           return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .refreshToken(refreshToken)
+                .refreshToken(refreshToken).userId((long) user.getId())
                 .build();
     }
 
@@ -129,4 +137,19 @@ public class AuthenticationService {
             }
         }
     }
+//    public boolean verifyEmail(String token) {
+//        String email = jwtService.extractUsername(token);
+//
+//        Optional<User> optionalUser = userRepository.findByEmail(email);
+//
+//        if (optionalUser.isPresent()) {
+//            User user = optionalUser.get();
+//            user.setEnabled(true);
+//            userRepository.save(user);
+//
+//            return true;
+//        }
+//
+//        return false;
+//    }
 }

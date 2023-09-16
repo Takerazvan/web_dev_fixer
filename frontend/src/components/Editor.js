@@ -28,9 +28,9 @@ export default function Editor(props) {
     }
   }
 
-  function handleChange(value) {
-    onChange(value)
-  }
+ function handleChange(editor, data, value) {
+    onChange(value);
+ }
 
   return (
     <div>

@@ -13,4 +13,5 @@ public class AuthenticationResponse {
 
 
 private String token, refreshToken;
+    private Long userId;
 }

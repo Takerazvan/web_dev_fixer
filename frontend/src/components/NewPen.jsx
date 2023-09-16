@@ -13,6 +13,8 @@ import { addPen } from "../hooks/addPen";
 function NewPen() {
   const dispatch = useDispatch();
 
+  //TODO ADD USER ID TO PAYLOAD!
+const userId=localStorage.getItem("userId");
   const html = useSelector((state) => state.html);
   const css = useSelector((state) => state.css);
   const js = useSelector((state) => state.js);
@@ -21,12 +23,9 @@ function NewPen() {
 
   const [title, setTitle] = useState("Pen");
 
-  const setHtml = (newHtml) =>
-    dispatch({ type: "UPDATE_HTML", payload: newHtml });
-
-  const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
-
-  const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
+const setHtml = (newHtml) =>dispatch({ type: "UPDATE_HTML", payload: newHtml });
+const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
+const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
 
   const savePen = async () => {
     try {
