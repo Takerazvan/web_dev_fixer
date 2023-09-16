@@ -28,11 +28,12 @@ export default function Result({ html, css, js }) {
       }}
     >
       {loading && (
-        <div
-          class="loader"
-          style={{ position: "absolute", top: "50%", left: "30%" }}
-        >
-          <div data-glitch="Loading..." className="glitch">
+        <div className="loader" >
+          <div
+            data-glitch="Loading..."
+            className="glitch"
+            style={{ position: "absolute", top: "50%", left: "30%" }}
+          >
             Loading...
           </div>
         </div>
