@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { registerUser } from "../hooks/registerUser";
 import PasswordChecklist from "react-password-checklist";
 export default function Register() {
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -20,37 +21,40 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-setFormData({
-  first_name: "",
-  last_name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-});
-    // TODO: Add validation before sending data
-
-    try {
-      const response = await fetch("http://localhost:8000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+    if (isPasswordValid) {
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
       });
+      // TODO: Add validation before sending data
 
-      const result = await response.json();
-      console.log("Success:", result);
-    } catch (error) {
-      console.error("Error:", error.message);
-      alert("User already registered");
+      try {
+        const response = await fetch("http://localhost:8000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
+        const result = await response.json();
+        console.log("Success:", result);
+      } catch (error) {
+        console.error("Error:", error.message);
+        alert("User already registered");
+      }
+    } else {
+      alert("Password not strong enough");
     }
+
   };
 
   return (
     <>
-      <div className="login-box mt-4" style={{height:"82vh"}}>
+      <div className="login-box mt-4" style={{ height: "82vh" }}>
         <form onSubmit={handleSubmit}>
           <div className="user-box">
             <input
@@ -121,6 +125,7 @@ setFormData({
             <button
               type="submit"
               className="test"
+              id="a"
               style={{ backgroundColor: "grey" }}
             >
               REGISTER
@@ -138,8 +143,8 @@ setFormData({
                 capital: "Password must contain an uppercase letter.",
                 match: "Passwords match.",
               }}
-              onChange={(isValid) => {}}
-              style={{ color: "white",fontSize:"10px" }}
+              onChange={(isValid) => setIsPasswordValid(isValid)}
+              style={{ color: "white", fontSize: "10px" }}
             />
           </center>
         </form>

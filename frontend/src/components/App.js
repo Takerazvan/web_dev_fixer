@@ -5,6 +5,7 @@ import Test from './Test';
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import NewPen from './NewPen';
 import NavBar from './NavBar';
+import { Navigate } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Home';
 import LoginRegsiter from './LoginRegsiter';
@@ -30,7 +31,7 @@ function App() {
             {isLoggedIn ? (
               <Route path="/newpen" element={<NewPen />} />
             ) : (
-             null
+              <Route path="/newpen" element={<Navigate to="/login" />} />
             )}
           </Routes>
         </div>
