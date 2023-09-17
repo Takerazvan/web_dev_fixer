@@ -14,6 +14,7 @@ import com.webdevfix.service.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
@@ -30,22 +31,20 @@ public class AuthenticationController {
    private final AuthenticationMapper mapper;
 private final EmailService emailService;
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request ) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
         try {
             return ResponseEntity.ok(service.register(request));
         } catch (Exception e) {
-
-            throw new CustomException("Registration failed", e.getCause());
+            throw new CustomException("Registration failed: " + e.getMessage(), e, HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login( @RequestBody AuthenticationRequest request ) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
         try {
-
             return ResponseEntity.ok(service.authenticate(request));
         } catch (Exception e) {
-            throw new CustomException("Login failed", e);
+            throw new CustomException("Login failed: " + e.getMessage(), e, HttpStatus.UNAUTHORIZED);
         }
     }
 

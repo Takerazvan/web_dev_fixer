@@ -29,8 +29,7 @@ export default function Register() {
         password: "",
         confirmPassword: "",
       });
-      // TODO: Add validation before sending data
-
+     
       try {
         const response = await fetch("http://localhost:8000/register", {
           method: "POST",
@@ -40,11 +39,18 @@ export default function Register() {
           body: JSON.stringify(formData),
         });
 
+       
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.log(result.message);
+          throw new Error(`${errorData.message}`);
+          
+        }
         const result = await response.json();
         console.log("Success:", result);
       } catch (error) {
-        console.error("Error:", error.message);
-        alert("User already registered");
+       console.error("Error:", error);
+       alert(error.message);
       }
     } else {
       alert("Password not strong enough");

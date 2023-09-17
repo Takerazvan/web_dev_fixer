@@ -2,6 +2,7 @@ package com.webdevfix.auth;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webdevfix.exceptions.CustomException;
 import com.webdevfix.model.Role;
 import com.webdevfix.model.User;
 import com.webdevfix.notifications.EmailService;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,7 +41,7 @@ public class AuthenticationService {
 
 
         if (userRepository.existsByEmail(request.email())) {
-            throw new IllegalArgumentException("User already registered");
+            throw new CustomException("User already registered", null, HttpStatus.BAD_REQUEST);
 
         }
         String hashedPassword = passwordEncoder.encode(request.password());
@@ -64,12 +66,16 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            throw new CustomException("Authentication failed: " + e.getMessage(), e, HttpStatus.UNAUTHORIZED);
+        }
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         revokeAllUserTokens(Optional.of(user));
