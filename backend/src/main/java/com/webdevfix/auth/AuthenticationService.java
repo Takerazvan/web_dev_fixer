@@ -15,6 +15,7 @@ import com.webdevfix.token.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -65,18 +66,22 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws AuthenticationException {
+        if (!userRepository.existsByEmail(request.email())) {
+            throw new CustomException("You dont have an account", null, HttpStatus.BAD_REQUEST);
+
+        }
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
+                            request.email(),
+                            request.password()
                     )
             );
         } catch (Exception e) {
-            throw new CustomException("Authentication failed: " + e.getMessage(), e, HttpStatus.UNAUTHORIZED);
+            throw new AuthenticationException("User or password incorrect " + e.getMessage());
         }
-        var user = userRepository.findByEmail(request.getEmail())
+        var user = userRepository.findByEmail(request.email())
                 .orElseThrow();
         revokeAllUserTokens(Optional.of(user));
         var jwtToken = jwtService.generateToken(user);

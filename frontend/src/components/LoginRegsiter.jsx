@@ -4,7 +4,9 @@ import "./index.css"
 export default function LoginRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  
+  
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -16,24 +18,36 @@ const dispatch = useDispatch();
         },
         body: JSON.stringify({ email, password }),
       });
-      const data = await response.json();
-      console.log("Login Successful:", data);
 
-       if (data.token) {
-         localStorage.setItem("token", data.token);
-         dispatch({ type: "SET_LOGGED_IN", payload: true }); 
-         localStorage.setItem("userId",data.userId)
+      const responseText = await response.text();
+      let responseData;
 
+      try {
+        responseData = JSON.parse(responseText);
+      } catch (error) {
+        throw new Error(responseText);
+      }
+
+      if (response.ok) {
+        console.log("Login Successful:", responseData);
+        if (responseData.token) {
+          localStorage.setItem("token", responseData.token);
+          dispatch({ type: "SET_LOGGED_IN", payload: true });
+          localStorage.setItem("userId", responseData.userId);
           window.location.href = "http://localhost:3000/newpen";
-       }
-  
-      
+        } else {
+          throw new Error("Unknown error occurred");
+        }
+      } else {
+        throw new Error(`${responseData.message}`);
+      }
     } catch (error) {
       console.error("Error during login:", error);
-
-    
+      alert(error.message);
     }
   };
+
+
 
   return (
     <div class="login-box">
