@@ -883,95 +883,121 @@ input{
   background: linear-gradient(90deg, transparent, #03f40f);
   animation: btn-anim1 2s linear infinite;
 }
-.glitch {
+.loader {
   position: relative;
-  font-size: 25px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: #fff;
-  letter-spacing: 5px;
-  z-index: 1;
-  animation: shift 1s ease-in-out infinite alternate;
+  width: 120px;
+  height: 120px;
 }
 
-.glitch:before,
-.glitch:after {
-  display: block;
-  content: attr(data-glitch);
+.loader span {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  transform: rotate(calc(18deg * var(--i)));
 }
 
-.glitch:before {
-  animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-  color: #8b00ff;
-  z-index: -1;
+.loader span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #00ff0a;
+  box-shadow: 0 0 10px #00ff0a, 0 0 20px #00ff0a, 0 0 40px #00ff0a,
+    0 0 60px #00ff0a, 0 0 80px #00ff0a, 0 0 100px #00ff0a;
+  animation: animate34 2s linear infinite;
+  animation-delay: calc(0.1s * var(--i));
 }
 
-.glitch:after {
-  animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-  color: #00e571;
-  z-index: -2;
-}
-
-@keyframes glitch {
+@keyframes animate34 {
   0% {
-    transform: translate(0);
+    transform: scale(1);
   }
 
-  20% {
-    transform: translate(-3px, 3px);
-  }
-
-  40% {
-    transform: translate(-3px, -3px);
-  }
-
-  60% {
-    transform: translate(3px, 3px);
-  }
-
-  80% {
-    transform: translate(3px, -3px);
-  }
-
-  to {
-    transform: translate(0);
+  80%,
+  100% {
+    transform: scale(0);
   }
 }
+#container-loader {
+  width: 100px;
+  height: 125px;
+  margin: auto auto;
+}
 
-@keyframes shift {
-  0%, 40%, 44%, 58%, 61%, 65%, 69%, 73%, 100% {
-    transform: skewX(0deg);
+.loading-title {
+  display: block;
+  text-align: center;
+  font-size: 20;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  padding-bottom: 15px;
+  color: #888;
+}
+
+.loading-circle {
+  display: block;
+  border-left: 5px solid;
+  border-top-left-radius: 100%;
+  border-top: 5px solid;
+  margin: 5px;
+  animation-name: Loader_611;
+  animation-duration: 1500ms;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+
+.sp1 {
+  border-left-color: #F44336;
+  border-top-color: #F44336;
+  width: 40px;
+  height: 40px;
+}
+
+.sp2 {
+  border-left-color: #FFC107;
+  border-top-color: #FFC107;
+  width: 30px;
+  height: 30px;
+}
+
+.sp3 {
+  width: 20px;
+  height: 20px;
+  border-left-color: #8bc34a;
+  border-top-color: #8bc34a;
+}
+
+@keyframes Loader_611 {
+  0% {
+    transform: rotate(0deg);
+    transform-origin: right bottom;
   }
 
-  41% {
-    transform: skewX(10deg);
+  25% {
+    transform: rotate(90deg);
+    transform-origin: right bottom;
   }
 
-  42% {
-    transform: skewX(-10deg);
+  50% {
+    transform: rotate(180deg);
+    transform-origin: right bottom;
   }
 
-  59% {
-    transform: skewX(40deg) skewY(10deg);
+  75% {
+    transform: rotate(270deg);
+    transform-origin: right bottom;
   }
 
-  60% {
-    transform: skewX(-40deg) skewY(-10deg);
-  }
-
-  63% {
-    transform: skewX(10deg) skewY(-5deg);
-  }
-
-  70% {
-    transform: skewX(-50deg) skewY(-20deg);
-  }
-
-  71% {
-    transform: skewX(10deg) skewY(-10deg);
+  100% {
+    transform: rotate(360deg);
+    transform-origin: right bottom;
   }
 }

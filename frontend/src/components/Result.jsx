@@ -28,14 +28,13 @@ export default function Result({ html, css, js }) {
       }}
     >
       {loading && (
-        <div className="loader" >
-          <div
-            data-glitch="Loading..."
-            className="glitch"
-            style={{ position: "absolute", top: "50%", left: "30%" }}
-          >
-            Loading...
-          </div>
+        <div id="container-loader" style={{position:"relative", top:"33%"}}>
+          <label class="loading-title">Loading ...</label>
+          <span class="loading-circle sp1">
+            <span class="loading-circle sp2">
+              <span class="loading-circle sp3"></span>
+            </span>
+          </span>
         </div>
       )}
       <iframe
