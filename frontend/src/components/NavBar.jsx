@@ -70,13 +70,23 @@ function NavBar() {
               <NavDropdown.Item href="#action/3.3">Forms</NavDropdown.Item>
               <NavDropdown.Divider />
             </NavDropdown>
-            <Link to="/login">
-              <Nav.Link href="#link" style={{ color: "white" }}>
-                <button id="create" style={{ color: "white" }}>
-                  CREATE
-                </button>
-              </Nav.Link>
-            </Link>
+            {isLoggedIn ? (
+              <Link to="/newpen">
+                <Nav.Link href="#link" style={{ color: "white" }}>
+                  <button id="create" style={{ color: "white" }}>
+                    CREATE
+                  </button>
+                </Nav.Link>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Nav.Link href="#link" style={{ color: "white" }}>
+                  <button id="create" style={{ color: "white" }}>
+                    CREATE
+                  </button>
+                </Nav.Link>
+              </Link>
+            )}
           </Nav>
           <Nav>
             {isLoggedIn ? (

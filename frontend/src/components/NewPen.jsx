@@ -14,7 +14,7 @@ function NewPen() {
   const dispatch = useDispatch();
 
   //TODO ADD USER ID TO PAYLOAD!
-const userId=localStorage.getItem("userId");
+
   const html = useSelector((state) => state.html);
   const css = useSelector((state) => state.css);
   const js = useSelector((state) => state.js);
