@@ -61,6 +61,7 @@ export default function Home() {
                   </div>
                   <Result html={pen.html} css={pen.css} js={pen.js} />
                 </Card.Body>
+                
               </Card>
             </Link>
           </Col>
