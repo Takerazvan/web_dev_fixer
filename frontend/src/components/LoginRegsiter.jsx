@@ -6,48 +6,39 @@ export default function LoginRegister() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+ const handleLogin = async (e) => {
+   e.preventDefault();
 
-    try {
-      const response = await fetch("http://localhost:8000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+   try {
+     const response = await fetch("http://localhost:8000/login", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({ email, password }),
+     });
 
-      const responseText = await response.text();
-      let responseData;
+     if (response.ok) {
+       const { token, userId } = await response.json();
+       console.log("Login Successful:", { token, userId });
 
-      try {
-        responseData = JSON.parse(responseText);
-      } catch (error) {
-        throw new Error(responseText);
-      }
+       localStorage.setItem("token", token);
+       localStorage.setItem("userId", userId);
+       dispatch({ type: "SET_LOGGED_IN", payload: true });
+       window.location.href = "http://localhost:3000/newpen";
+     } else {
+       const errorMessage = await response.text();
+       throw new Error(errorMessage);
+     }
+   } catch (error) {
+     console.error("Error during login:", error);
+     alert(error.message);
+   }
+ };
 
-      if (response.token) {
-        console.log("Login Successful:", responseData);
-       
-          localStorage.setItem("token", responseData.token);
-          dispatch({ type: "SET_LOGGED_IN", payload: true });
-          localStorage.setItem("userId", responseData.userId);
-          window.location.href = "http://localhost:3000/newpen";
-      
-      } else {
-        const errorData = await response.text();
-
-        throw new Error(`${errorData} `);
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      alert(error.message);
-    }
-  };
 
   return (
-    <div class="login-box">
+    <div class="login-box" >
       <form onSubmit={handleLogin}>
         <div class="user-box">
           <input

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 function NavBar() {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.loggedIn); // Access the loggedIn state
+  const isLoggedIn = useSelector((state) => state.loggedIn); //Access the loggedin state
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
@@ -45,14 +45,18 @@ function NavBar() {
   return (
     <Navbar expand="lg" style={{ backgroundColor: "#212121" }}>
       <Container id="test" style={{ backgroundColor: "#212121" }}>
+        
         <Navbar.Brand href="#home" style={{ color: "white" }} id="brand">
-          <button data-text="Awesome" className="brand">
-            <span className="actual-text">&nbsp;WebDevFixer&nbsp;</span>
-            <span className="hover-text" aria-hidden="true">
-              &nbsp;WebDevFixer&nbsp;
-            </span>
+          <Nav.Link href="/">
+            <button data-text="Awesome" className="brand">
+              <span className="actual-text">&nbsp;WebDevFixer&nbsp;</span>
+              <span className="hover-text" aria-hidden="true">
+                &nbsp;WebDevFixer&nbsp;
+              </span>
           </button>
-        </Navbar.Brand>
+          </Nav.Link>
+          </Navbar.Brand>
+      
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
