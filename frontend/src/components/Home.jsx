@@ -44,15 +44,21 @@ export default function Home() {
         {pens.map((pen, index) => (
           <Col className="mb-2" key={index} data={pen}>
             <Link to="/test" style={{ textDecoration: "none" }}>
-              <Card
-                onClick={() => handleCardClick(pen)}
-                id="test"
-                className="bg-dark text-white test"
-              >
+              <Card id="test" className="bg-dark text-white test">
                 <Card.Body>
                   <p className="text-center neonText" id="card-title-home">
                     {pen.title}
                   </p>
+                  <div className="bg-dark">
+                    <button
+                      id="test"
+                      class="ui-btn"
+                      onClick={() => handleCardClick(pen)}
+                      style={{ marginLeft: "25%" }}
+                    >
+                      <span>{"</GetCode>"}</span>
+                    </button>
+                  </div>
                   <Result html={pen.html} css={pen.css} js={pen.js} />
                 </Card.Body>
               </Card>
