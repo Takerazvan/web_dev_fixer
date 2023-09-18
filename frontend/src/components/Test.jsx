@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "../components/index.css";
 import Tabs from "./Tabs";
 
@@ -18,16 +18,16 @@ function Test() {
   const js = useSelector((state) => state.js);
 
   const [activePanel, setActivePanel] = useState("html");
- 
+
   const [title, setTitle] = useState("Pen");
 
-  const setHtml = (newHtml) => dispatch({ type: "UPDATE_HTML", payload: newHtml });
+  const setHtml = (newHtml) =>
+    dispatch({ type: "UPDATE_HTML", payload: newHtml });
 
   const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
 
   const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
 
-  
   const savePen = async () => {
     try {
       const penDetails = {
@@ -79,8 +79,6 @@ function Test() {
             js={js}
             setJs={setJs}
           />
-          
-        
         </Col>
       </Row>
     </Container>

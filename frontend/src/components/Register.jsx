@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../hooks/registerUser";
 import PasswordChecklist from "react-password-checklist";
+
 export default function Register() {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (isPasswordValid) {
       setFormData({
         first_name: "",
@@ -43,12 +45,14 @@ export default function Register() {
        
         if (!response.ok) {
           const errorData = await response.text();
-          console.log(errorData);
+          
 
           throw new Error(`${errorData} `);
         }
-        const result = await response.json();
-        console.log("Success:", result);
+       
+        
+        alert("Resgitration Succesfull! Check your email");
+
       } catch (error) {
        console.error("Error:", error);
         alert(error.message);

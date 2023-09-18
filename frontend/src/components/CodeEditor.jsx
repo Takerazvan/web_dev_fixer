@@ -1,13 +1,9 @@
 import Editor from "./Editor";
 import React, { useState } from "react";
 
-function CodeEditor({  js,
-  setJs, }) {
-
-  
-
+function CodeEditor({ js, setJs }) {
   return (
-    <div >
+    <div>
       <Editor
         language="javascript"
         displayName="JS"

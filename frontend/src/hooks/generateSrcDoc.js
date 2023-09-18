@@ -1,5 +1,3 @@
-
-
 export function generateSrcDoc(html, css, js) {
   return `
     <html>

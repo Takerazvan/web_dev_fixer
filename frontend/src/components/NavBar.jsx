@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,7 +10,7 @@ function NavBar() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.loggedIn); // Access the loggedIn state
   const dispatch = useDispatch();
-  
+
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -30,7 +30,7 @@ function NavBar() {
           localStorage.removeItem("token");
           localStorage.removeItem("userId");
           dispatch({ type: "SET_LOGGED_IN", payload: false });
-           navigate("/");
+          navigate("/");
         } else {
           console.log("Logout failed", response);
         }

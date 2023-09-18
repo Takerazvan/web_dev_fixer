@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import "./index.css"
+import "./index.css";
 export default function LoginRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -28,26 +27,24 @@ export default function LoginRegister() {
         throw new Error(responseText);
       }
 
-      if (response.ok) {
+      if (response.token) {
         console.log("Login Successful:", responseData);
-        if (responseData.token) {
+       
           localStorage.setItem("token", responseData.token);
           dispatch({ type: "SET_LOGGED_IN", payload: true });
           localStorage.setItem("userId", responseData.userId);
           window.location.href = "http://localhost:3000/newpen";
-        } else {
-          throw new Error("Unknown error occurred");
-        }
+      
       } else {
-        throw new Error(`${responseData.message}`);
+        const errorData = await response.text();
+
+        throw new Error(`${errorData} `);
       }
     } catch (error) {
       console.error("Error during login:", error);
       alert(error.message);
     }
   };
-
-
 
   return (
     <div class="login-box">
@@ -65,7 +62,7 @@ export default function LoginRegister() {
           />
           <label>Username</label>
         </div>
-        
+
         <div className="user-box">
           <input
             required

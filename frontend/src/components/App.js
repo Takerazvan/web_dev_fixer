@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import KataSection from './KataSection';
-import Test from './Test';
-import "bootstrap/dist/css/bootstrap.min.css"; 
-import NewPen from './NewPen';
-import NavBar from './NavBar';
+import KataSection from "./KataSection";
+import Test from "./Test";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NewPen from "./NewPen";
+import NavBar from "./NavBar";
 import { Navigate } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from './Home';
-import LoginRegsiter from './LoginRegsiter';
-import Register from './Register';
-import { useSelector } from 'react-redux';
+import Home from "./Home";
+import LoginRegsiter from "./LoginRegsiter";
+import Register from "./Register";
+import { useSelector } from "react-redux";
 
 function App() {
-  const isLoggedIn = useSelector((state) => state.loggedIn); 
-  console.log(isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.loggedIn);
+  console.log(isLoggedIn);
 
   return (
     <>
