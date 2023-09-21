@@ -1,14 +1,27 @@
 package com.webdevfix.notifications;
 
-import org.springframework.stereotype.Service;
+import javax.naming.directory.*;
+import javax.naming.NamingException;
+import javax.naming.Context;
+import java.util.Hashtable;
 
-import java.util.function.Predicate;
+public class EmailValidator {
 
-@Service
-public class EmailValidator implements Predicate<String> {
+    public static boolean isEmailValid(String email) {
+        String[] domainParts = email.split("@");
+        if (domainParts.length != 2) return false;
+        String domain = domainParts[1];
 
-    @Override
-    public boolean test(String s) {
-        return s.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        Hashtable<String, String> env = new Hashtable<>();
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.dns.DnsContextFactory");
+        env.put(Context.PROVIDER_URL, "dns:");
+
+        try {
+            DirContext dirContext = new InitialDirContext(env);
+            Attributes attrs = dirContext.getAttributes(domain, new String[]{"MX"});
+            return attrs.get("MX") != null;
+        } catch (NamingException e) {
+            return false;
+        }
     }
 }

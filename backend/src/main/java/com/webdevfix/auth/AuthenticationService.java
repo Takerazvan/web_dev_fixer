@@ -6,6 +6,7 @@ import com.webdevfix.exceptions.CustomException;
 import com.webdevfix.model.Role;
 import com.webdevfix.model.User;
 import com.webdevfix.notifications.EmailService;
+import com.webdevfix.notifications.EmailValidator;
 import com.webdevfix.repository.TokenRepository;
 import com.webdevfix.repository.UserRepository;
 import com.webdevfix.service.JwtService;
@@ -45,6 +46,9 @@ public class AuthenticationService {
             throw new CustomException("User already registered", null, HttpStatus.BAD_REQUEST);
 
         }
+        if (!EmailValidator.isEmailValid(request.email())) {
+            throw new CustomException("Invalid email address", null, HttpStatus.BAD_REQUEST);
+        }
 
         String hashedPassword = passwordEncoder.encode(request.password());
         var user = User.builder()
@@ -56,7 +60,7 @@ public class AuthenticationService {
                 .build();
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        var verificationLink= "http://localhost:8080/verify?token=" + jwtToken;
+        var verificationLink= "http://localhost:9090/verify?token=" + jwtToken;
         emailService.send(savedUser.getEmail(), verificationLink);
 
         var refreshToken = jwtService.generateRefreshToken(user);

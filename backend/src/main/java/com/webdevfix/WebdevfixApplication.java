@@ -18,20 +18,6 @@ public class WebdevfixApplication {
 		SpringApplication.run(WebdevfixApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner demoData(UserService userService) {
-		return args -> {
-			User mockUser = User.builder()
-					.first_name("Razvan")
-					.last_name("T")
-					.email("razv@gmail.com")
-					.password("password")
 
-					.penComponents(new ArrayList<>())
-
-					.build();
-
-			userService.createUser(mockUser);
-		};
 	}
-}
+
