@@ -29,10 +29,10 @@ export default function Result({ html, css, js }) {
     >
       {loading && (
         <div id="container-loader" style={{position:"relative", top:"33%"}}>
-          <label class="loading-title">Loading ...</label>
-          <span class="loading-circle sp1">
-            <span class="loading-circle sp2">
-              <span class="loading-circle sp3"></span>
+          <label className="loading-title">Loading ...</label>
+          <span className="loading-circle sp1">
+            <span className="loading-circle sp2">
+              <span className="loading-circle sp3"></span>
             </span>
           </span>
         </div>

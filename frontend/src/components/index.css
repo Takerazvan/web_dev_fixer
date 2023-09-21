@@ -35,25 +35,9 @@
   display: none; /* Initially hidden */
 }
 
-.result-panel {
-  /* grid-column: 3 / 4;
-  background-color: #fff;
-  border-left: 1px solid #ddd;
-  overflow: auto; */
-}
 
-iframe {
-  /* width: 100%;
-  height: 100%;
-  border: none; */
-}
 /* ... previous CSS ... */
 
-.code-panel {
-  /* ... previous styles ... */
-  /* display: none;  */
-  /* Initially hidden */
-}
 
 .code-panel.active {
   display: block;
