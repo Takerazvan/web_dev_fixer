@@ -1,5 +1,5 @@
 import Editor from "./Editor";
-import React, { useState } from "react";
+import React from "react";
 
 function CodeEditor({ js, setJs }) {
   return (

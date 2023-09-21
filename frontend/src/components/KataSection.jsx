@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useRandomKata from "../hooks/useRandomKata";
+
 import CodeEditor from "./CodeEditor";
 
 export default function KataSection() {

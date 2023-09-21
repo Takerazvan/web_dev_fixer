@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector, useDispatch } from "react-redux";
-import { addPen } from "../hooks/addPen";
+
 
 function Test() {
   const dispatch = useDispatch();
@@ -19,7 +19,6 @@ function Test() {
 
   const [activePanel, setActivePanel] = useState("html");
 
-  const [title, setTitle] = useState("Pen");
 
   const setHtml = (newHtml) =>
     dispatch({ type: "UPDATE_HTML", payload: newHtml });
@@ -28,21 +27,7 @@ function Test() {
 
   const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
 
-  const savePen = async () => {
-    try {
-      const penDetails = {
-        userId: 1,
-        title,
-        html,
-        css,
-        js,
-      };
-      const data = await addPen(penDetails);
-      console.log("Success:", data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+ 
 
   return (
     <Container className="border-none rounded-x2 overflow-hidden">

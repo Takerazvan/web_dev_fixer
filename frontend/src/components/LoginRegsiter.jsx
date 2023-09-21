@@ -1,12 +1,12 @@
-import React, { useState ,useEffect} from "react";
-import { useDispatch,useSelector } from "react-redux";
+import React, { useState} from "react";
+import { useDispatch } from "react-redux";
 import "./index.css";
 import { loginUser } from "../hooks/loginUser";
 export default function LoginRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.loggedIn);
+  
  const handleLogin = async (e) => {
    e.preventDefault();
 
