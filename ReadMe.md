@@ -25,7 +25,7 @@ This is a CodePen Clone app, a web-based IDE for front-end designers and develop
    
 ## Backend
 
-The backend of this application is developed using Java Spring Boot, offering a robust framework to build the server-side of the application. It interacts with PostgreSQL database to store and manage the user-created pens. Here is the basic setup guide:
+The backend of the application is designed with Java Spring Boot, a robust and versatile framework for building the server-side components of the application. The backend communicates with a PostgreSQL database to store and manage user-generated content, facilitating efficient data management and retrieval.
 
 ### Setting up the Backend
 
@@ -40,12 +40,24 @@ The project uses PostgreSQL as its database system. Follow these steps to set it
 1. Install [PostgreSQL](https://www.postgresql.org/download/) and set up a new database.
 2. Configure your `application.properties` file in your Spring Boot application to connect to your PostgreSQL database. 
 
+## Setting up the Backend
+
+1. Download and install Java JDK (version 15 or later) to develop and run the Java application.
+2. Download and install Maven to manage project dependencies and builds effectively.
+3. Initialize your Spring Boot application following the instructions in the official guide to set up the application structure and necessary configurations.
+## Security and User Authentication
+1. Security is a paramount aspect of this application, ensuring safe user data handling and secure interactions with the backend. Here are some features and strategies implemented to enhance security:
+
+2. Secure Password Handling: User passwords are stored securely using modern cryptographic hashing algorithms.
+3. JWT Authentication: Utilizes JSON Web Tokens (JWT) for secure, token-based user authentication.
+4. Cross-Origin Resource Sharing (CORS): Implements CORS policies to prevent unauthorized domains from making requests to the backend.
 
 
 ## Usage
 
 1. **Creating a New Pen**:
 - Navigate to the home page and click on 'Create New Pen' to start creating your code snippet.
+- Login or Register to save a new Pen!
 
 2. **Editing a Pen**:
 - Use the editor panels to add or modify HTML, CSS, and JavaScript code.
