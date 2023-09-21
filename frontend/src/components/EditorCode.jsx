@@ -13,30 +13,30 @@ export default function EditorCode({
 }) {
   return (
     <div>
-      <div className={`code-panel ${activePanel === "html" ? "active" : ""}`}>
+      {activePanel === "html" && (
         <Editor
           language="xml"
           displayName="HTML"
           value={html}
           onChange={setHtml}
         />
-      </div>
-      <div className={`code-panel ${activePanel === "css" ? "active" : ""}`}>
+      )}
+      {activePanel === "css" && (
         <Editor
           language="css"
           displayName="CSS"
           value={css}
           onChange={setCss}
         />
-      </div>
-      <div className={`code-panel ${activePanel === "js" ? "active" : ""}`}>
+      )}
+      {activePanel === "js" && (
         <Editor
           language="javascript"
           displayName="JS"
           value={js}
           onChange={setJs}
         />
-      </div>
+      )}
     </div>
   );
 }

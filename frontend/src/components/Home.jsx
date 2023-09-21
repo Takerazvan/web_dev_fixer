@@ -50,7 +50,7 @@ export default function Home() {
                       id="test"
                       class="ui-btn"
                       onClick={() => handleCardClick(pen)}
-                      style={{ marginLeft: "25%" }}
+                      style={{ marginLeft: "29%" }}
                     >
                       <span>{"</GetCode>"}</span>
                     </button>

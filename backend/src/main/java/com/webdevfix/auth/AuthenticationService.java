@@ -45,6 +45,7 @@ public class AuthenticationService {
             throw new CustomException("User already registered", null, HttpStatus.BAD_REQUEST);
 
         }
+
         String hashedPassword = passwordEncoder.encode(request.password());
         var user = User.builder()
                 .first_name(request.first_name())
@@ -66,7 +67,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) throws AuthenticationException {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws CustomException {
         if (!userRepository.existsByEmail(request.email())) {
             throw new CustomException("You dont have an account", null, HttpStatus.BAD_REQUEST);
 
@@ -79,7 +80,7 @@ public class AuthenticationService {
                     )
             );
         } catch (Exception e) {
-            throw new AuthenticationException("User or password incorrect " + e.getMessage());
+            throw new CustomException("User or password incorrect ",null,HttpStatus.UNAUTHORIZED);
         }
         var user = userRepository.findByEmail(request.email())
                 .orElseThrow();

@@ -17,7 +17,7 @@ function NavBar() {
       console.log("Token: ", token);
 
       if (token) {
-        const response = await fetch("http://localhost:8000/logout", {
+        const response = await fetch("http://localhost:9090/logout", {
           mode: "cors",
           method: "POST",
           headers: {
@@ -29,6 +29,7 @@ function NavBar() {
           console.log("Logout successful", response);
           localStorage.removeItem("token");
           localStorage.removeItem("userId");
+          localStorage.removeItem("userName")
           dispatch({ type: "SET_LOGGED_IN", payload: false });
           navigate("/");
         } else {

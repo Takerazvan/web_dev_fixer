@@ -23,7 +23,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isPasswordValid) {
+    if (isPasswordValid ) {
       setFormData({
         first_name: "",
         last_name: "",
@@ -31,27 +31,16 @@ export default function Register() {
         password: "",
         confirmPassword: "",
       });
-      // TODO: Add validation before sending data
+    
 
       try {
-        const response = await fetch("http://localhost:8000/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+         const response = await registerUser(formData);
 
+          console.log("Registration response:", response);
        
-        if (!response.ok) {
-          const errorData = await response.text();
-          
-
-          throw new Error(`${errorData} `);
-        }
        
         
-        alert("Resgitration Succesfull! Check your email");
+        
 
       } catch (error) {
        console.error("Error:", error);

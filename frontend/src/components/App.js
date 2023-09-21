@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import KataSection from "./KataSection";
+
 import Test from "./Test";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NewPen from "./NewPen";
@@ -12,9 +12,13 @@ import LoginRegsiter from "./LoginRegsiter";
 import Register from "./Register";
 import { useSelector } from "react-redux";
 
+import { useAuth } from "../hooks/checkAuth";
 function App() {
+
+ useAuth();
+
   const isLoggedIn = useSelector((state) => state.loggedIn);
-  console.log(isLoggedIn);
+
 
   return (
     <>

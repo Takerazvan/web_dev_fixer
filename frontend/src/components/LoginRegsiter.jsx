@@ -1,44 +1,39 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState ,useEffect} from "react";
+import { useDispatch,useSelector } from "react-redux";
 import "./index.css";
+import { loginUser } from "../hooks/loginUser";
 export default function LoginRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
+  const isLoggedIn = useSelector((state) => state.loggedIn);
  const handleLogin = async (e) => {
    e.preventDefault();
 
    try {
-     const response = await fetch("http://localhost:8000/login", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify({ email, password }),
-     });
+     const { token, userId } = await loginUser({ email, password });
 
-     if (response.ok) {
-       const { token, userId } = await response.json();
-       console.log("Login Successful:", { token, userId });
+     console.log("Login Successful:", { token, userId });
 
-       localStorage.setItem("token", token);
-       localStorage.setItem("userId", userId);
-       dispatch({ type: "SET_LOGGED_IN", payload: true });
-       window.location.href = "http://localhost:3000/newpen";
-     } else {
-       const errorMessage = await response.text();
-       throw new Error(errorMessage);
-     }
+     localStorage.setItem("token", token);
+     localStorage.setItem("userId", userId);
+     dispatch({ type: "SET_LOGGED_IN", payload: true });
+     window.location.href = "http://localhost:3000/newpen";
    } catch (error) {
      console.error("Error during login:", error);
      alert(error.message);
    }
- };
+  };
+  
+
+
+    
+
+
 
 
   return (
-    <div class="login-box" >
+    <div class="login-box">
       <form onSubmit={handleLogin}>
         <div class="user-box">
           <input
@@ -66,7 +61,7 @@ export default function LoginRegister() {
           />
           <label>Password</label>
         </div>
-        <center>
+        <div style={{ textAlign: "center" }}>
           <button
             id="a"
             className="test"
@@ -76,9 +71,13 @@ export default function LoginRegister() {
             SEND
             <span></span>
           </button>
-        </center>
+        </div>
+
         <a id="a" className="test" href="/register">
           REGISTER
+        </a>
+        <a href="http://localhost:9090/oauth2/authorization/github">
+          Login with GitHub
         </a>
       </form>
     </div>
