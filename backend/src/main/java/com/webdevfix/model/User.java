@@ -29,7 +29,8 @@ public class User implements UserDetails {
     private int id;
 
     private String first_name, last_name, email, password;
-
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified;
 
     @Enumerated
     private Role role;
@@ -41,7 +42,7 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<PenComponent> penComponents=new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" )
     private List<Token> tokens=new ArrayList<>();
 
 

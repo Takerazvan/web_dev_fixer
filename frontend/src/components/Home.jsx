@@ -48,7 +48,7 @@ export default function Home() {
                   <div className="bg-dark">
                     <button
                       id="test"
-                      class="ui-btn"
+                      className="ui-btn"
                       onClick={() => handleCardClick(pen)}
                       style={{ marginLeft: "29%" }}
                     >

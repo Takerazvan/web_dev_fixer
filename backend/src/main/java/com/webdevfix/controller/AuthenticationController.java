@@ -17,6 +17,7 @@
     import org.springframework.security.core.Authentication;
 
     import org.springframework.web.bind.annotation.*;
+    import org.springframework.web.servlet.view.RedirectView;
 
     @RestController
     @RequiredArgsConstructor
@@ -41,6 +42,18 @@
 
                 return ResponseEntity.ok(service.authenticate(request));
 
+        }
+        @GetMapping("/verify")
+        public RedirectView verify(@RequestParam("token") String token) {
+            boolean emailVerified = service.verifyEmail(token);
+
+            if (emailVerified) {
+                // Redirect to the login page
+                return new RedirectView("http://localhost:3000/login");
+            } else {
+                // Redirect to an error page
+                return new RedirectView("http://localhost:3000/error");
+            }
         }
         @GetMapping("/loginWithGithub")
         public ResponseEntity<String> loginWithGithub() {

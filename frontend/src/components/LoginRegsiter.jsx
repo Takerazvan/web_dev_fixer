@@ -33,9 +33,9 @@ export default function LoginRegister() {
 
 
   return (
-    <div class="login-box">
+    <div className="login-box">
       <form onSubmit={handleLogin}>
-        <div class="user-box">
+        <div className="user-box">
           <input
             required
             className="input"

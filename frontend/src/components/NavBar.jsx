@@ -46,18 +46,22 @@ function NavBar() {
   return (
     <Navbar expand="lg" style={{ backgroundColor: "#212121" }}>
       <Container id="test" style={{ backgroundColor: "#212121" }}>
-        
-        <Navbar.Brand href="#home" style={{ color: "white" }} id="brand">
+        <Navbar.Brand
+          as="span"
+          href="#home"
+          style={{ color: "white" }}
+          id="brand"
+        >
           <Nav.Link href="/">
             <button data-text="Awesome" className="brand">
               <span className="actual-text">&nbsp;WebDevFixer&nbsp;</span>
               <span className="hover-text" aria-hidden="true">
                 &nbsp;WebDevFixer&nbsp;
               </span>
-          </button>
+            </button>
           </Nav.Link>
-          </Navbar.Brand>
-      
+        </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -76,21 +80,27 @@ function NavBar() {
               <NavDropdown.Divider />
             </NavDropdown>
             {isLoggedIn ? (
-              <Link to="/newpen">
-                <Nav.Link href="#link" style={{ color: "white" }}>
-                  <button id="create" style={{ color: "white" }}>
-                    CREATE
-                  </button>
-                </Nav.Link>
-              </Link>
+              <Nav.Link
+                href="#link"
+                as={Link}
+                to="/newpen"
+                style={{ color: "white" }}
+              >
+                <button id="create" style={{ color: "white" }}>
+                  CREATE
+                </button>
+              </Nav.Link>
             ) : (
-              <Link to="/login">
-                <Nav.Link href="#link" style={{ color: "white" }}>
-                  <button id="create" style={{ color: "white" }}>
-                    CREATE
-                  </button>
-                </Nav.Link>
-              </Link>
+              <Nav.Link
+                as={Link}
+                to="/login"
+                href="#link"
+                style={{ color: "white" }}
+              >
+                <button id="create" style={{ color: "white" }}>
+                  CREATE
+                </button>
+              </Nav.Link>
             )}
           </Nav>
           <Nav>

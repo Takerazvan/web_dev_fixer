@@ -93,9 +93,11 @@ public class AuthenticationService {
         var refreshToken = jwtService.generateRefreshToken(user);
 
             System.out.println(user.isAccountNonLocked());
-//if (!user.isEnabled()){
-//    throw new IllegalStateException("Email not verified");
-//}
+        if (!user.isVerified()) {
+            var verificationLink= "http://localhost:9090/verify?token=" + jwtToken;
+            emailService.send(user.getEmail(), verificationLink);
+            throw new CustomException("Email not verified",null,HttpStatus.UNAUTHORIZED);
+        }
         saveUserToken(user, jwtToken);
            return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -153,19 +155,19 @@ public class AuthenticationService {
             }
         }
     }
-//    public boolean verifyEmail(String token) {
-//        String email = jwtService.extractUsername(token);
-//
-//        Optional<User> optionalUser = userRepository.findByEmail(email);
-//
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            user.setEnabled(true);
-//            userRepository.save(user);
-//
-//            return true;
-//        }
-//
-//        return false;
-//    }
+    public boolean verifyEmail(String token) {
+        String email = jwtService.extractUsername(token);
+
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setVerified(true);
+            userRepository.save(user);
+
+            return true;
+        }
+
+        return false;
+    }
 }
