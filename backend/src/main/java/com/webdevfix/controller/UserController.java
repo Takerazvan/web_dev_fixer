@@ -1,7 +1,9 @@
 package com.webdevfix.controller;
 
 import com.webdevfix.model.PenComponent;
+import com.webdevfix.model.Role;
 import com.webdevfix.model.User;
+import com.webdevfix.repository.UserRepository;
 import com.webdevfix.service.PenRequest;
 import com.webdevfix.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    private UserRepository userRepository;
 
     @PostMapping("/addUser")
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -41,9 +44,10 @@ public class UserController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> sellers = userService.getAllUsers();
+        return ResponseEntity.ok(sellers);
     }
 
     @PutMapping("/{id}")

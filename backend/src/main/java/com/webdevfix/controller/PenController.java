@@ -1,5 +1,6 @@
 package com.webdevfix.controller;
 
+import com.webdevfix.dto.PenDto;
 import com.webdevfix.model.PenComponent;
 import com.webdevfix.service.PenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PenController {
     }
 
     @GetMapping
-    public List<PenComponent> getAllPens() {
+    public List<PenDto> getAllPens() {
         return penService.getAllPens();
     }
 

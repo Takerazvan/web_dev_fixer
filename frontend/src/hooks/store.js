@@ -6,7 +6,8 @@ const initialState = {
   html: "",
   css: "",
   js: "",
-  userId:null,
+  userId: null,
+  penId:null,
   loggedIn: false,
 };
 

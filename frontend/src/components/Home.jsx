@@ -20,7 +20,7 @@ export default function Home() {
     dispatch({ type: "UPDATE_JS", payload: pen.js });
   };
 
-  //fetch
+
   useEffect(() => {
     const fetchData = async () => {
       try {

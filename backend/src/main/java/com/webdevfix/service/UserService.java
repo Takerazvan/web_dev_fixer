@@ -1,6 +1,7 @@
     package com.webdevfix.service;
 
     import com.webdevfix.model.PenComponent;
+    import com.webdevfix.model.Role;
     import com.webdevfix.model.User;
     import com.webdevfix.repository.UserRepository;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,9 @@
         }
 
         public List<User> getAllUsers() {
-            return userRepository.findAll();
+            return userRepository.findAll().stream()
+                    .filter(user -> user.getRole() == Role.USER)
+                    .collect(Collectors.toList());
         }
 
 
