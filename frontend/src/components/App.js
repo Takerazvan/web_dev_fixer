@@ -51,7 +51,7 @@ function App() {
             {isLoggedIn ? (
               <Route path="/my-components" element={<MyComponents />} />
             ) : (
-              <Route path="/newpen" element={<Navigate to="/login" />} />
+              <Route path="/my-components" element={<Navigate to="/login" />} />
             )}
           </Routes>
         </div>

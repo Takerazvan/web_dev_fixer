@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "../components/index.css";
 import Tabs from "./Tabs";
 
@@ -25,15 +25,8 @@ function NewPen() {
 
 const setHtml = (newHtml) =>dispatch({ type: "UPDATE_HTML", payload: newHtml });
 const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
-  const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
-  
-  
-  const setId = useCallback(
-    (id) => {
-      dispatch({ type: "UPDATE_ID", payload: id });
-    },
-    [dispatch]
-  );
+const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
+  const setId = (id) => dispatch({ type: "UPDATE_ID", payload: id });
   
   const savePen = async () => {
       if (!html.trim() || !css.trim() ) {
@@ -54,7 +47,11 @@ const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
       console.error("Error:", error);
     }
   };
- 
+  useEffect(() => {
+    dispatch({ type: "UPDATE_HTML", payload: "" });
+    dispatch({ type: "UPDATE_CSS", payload: "" });
+    dispatch({ type: "UPDATE_JS", payload: "" });
+  }, [dispatch]);
 
    useEffect(() => {
     
@@ -65,7 +62,7 @@ const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
        setId(userIdFromStorage);
        console.log(userIdFromStorage)
      }
-   }, [dispatch,setId]);
+   }, [dispatch]);
   
   return (
     <Container className="border-none rounded-x2 overflow-hidden">
