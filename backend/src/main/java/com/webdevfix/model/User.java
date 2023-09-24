@@ -3,10 +3,7 @@ package com.webdevfix.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.webdevfix.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +23,7 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_seq", allocationSize = 1)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
-    private int id;
+    private Integer id;
 
     private String first_name, last_name, email, password;
     @Column(name = "is_verified", nullable = false)
@@ -38,10 +35,12 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @ToString.Exclude
     private List<PenComponent> penComponents=new ArrayList<>();
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "user" )
     private List<Token> tokens=new ArrayList<>();
 

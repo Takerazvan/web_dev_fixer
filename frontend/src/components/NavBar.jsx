@@ -11,6 +11,7 @@ function NavBar() {
   const isLoggedIn = useSelector((state) => state.loggedIn); //Access the loggedin state
   const dispatch = useDispatch();
 
+
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -68,15 +69,26 @@ function NavBar() {
             <Nav.Link href="/" style={{ color: "white" }}>
               Home
             </Nav.Link>
+
             <NavDropdown
               title={<span style={{ color: "white" }}>Components</span>}
               id="basic-nav-dropdown"
+              style={{ color: "white", textDecoration:"none" }}
+              
             >
               <Link to="/components/buttons">
-                <NavDropdown.Item href="#action/3.1">Buttons</NavDropdown.Item>
+                <NavDropdown.Item className="navbarButton" href="#action/3.1">
+                  Buttons
+                </NavDropdown.Item>
               </Link>
-              <NavDropdown.Item href="#action/3.2">Cards</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Forms</NavDropdown.Item>
+              <Link to="/my-components">
+                <NavDropdown.Item className="navbarButton" href="#action/3.2">
+                  My Components
+                </NavDropdown.Item>
+              </Link>
+              <NavDropdown.Item className="navbarButton" href="#action/3.3">
+                Forms
+              </NavDropdown.Item>
               <NavDropdown.Divider />
             </NavDropdown>
             {isLoggedIn ? (

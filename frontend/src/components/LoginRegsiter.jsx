@@ -1,12 +1,22 @@
 import React, { useState} from "react";
 import { useDispatch } from "react-redux";
 import "./index.css";
+import "../login.css";
 import { loginUser } from "../hooks/loginUser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+
 export default function LoginRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   
+const handleTogglePassword = () => {
+  setShowPassword(!showPassword);
+};
+
  const handleLogin = async (e) => {
    e.preventDefault();
 
@@ -33,7 +43,7 @@ export default function LoginRegister() {
 
 
   return (
-    <div className="login-box">
+    <div className="login-box" id="register-box">
       <form onSubmit={handleLogin}>
         <div className="user-box">
           <input
@@ -48,12 +58,17 @@ export default function LoginRegister() {
           />
           <label>Username</label>
         </div>
-
+        <FontAwesomeIcon
+          icon={showPassword ? faEyeSlash : faEye}
+          onClick={handleTogglePassword}
+          className="eye-icon"
+          style={{ color: "white" }}
+        />
         <div className="user-box">
           <input
             required
             className="input"
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             value={password}
@@ -76,9 +91,11 @@ export default function LoginRegister() {
         <a id="a" className="test" href="/register">
           REGISTER
         </a>
+
         <a href="http://localhost:9090/oauth2/authorization/github">
           Login with GitHub
         </a>
+        <a href="/reset-password">Forgot Password</a>
       </form>
     </div>
   );

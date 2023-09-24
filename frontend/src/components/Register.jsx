@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { registerUser } from "../hooks/registerUser";
 import PasswordChecklist from "react-password-checklist";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Register() {
+  const [showPassword, setShowPassword] = useState(false);
+  
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [formData, setFormData] = useState({
     first_name: "",
@@ -54,7 +62,7 @@ export default function Register() {
 
   return (
     <>
-      <div className="login-box mt-4" style={{ height: "82vh" }}>
+      <div className="login-box mt-4" style={{ height: "86vh" }}>
         <form onSubmit={handleSubmit}>
           <div className="user-box">
             <input
@@ -94,12 +102,17 @@ export default function Register() {
             />
             <label>Email</label>
           </div>
-
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            onClick={handleTogglePassword}
+            className="eye-icon mb-2"
+            style={{ color: "white" }}
+          />
           <div className="user-box">
             <input
               required
               className="input"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={formData.password}
@@ -112,7 +125,7 @@ export default function Register() {
             <input
               required
               className="input"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Confirm Password"
               value={formData.confirmPassword}

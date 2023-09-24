@@ -26,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
@@ -169,5 +170,22 @@ public class AuthenticationService {
         }
 
         return false;
+    }
+    public String generateResetPasswordToken(String email) {
+
+        Optional<User> optionalUser = userRepository.findByEmail(email.replace("\"", "").trim());
+
+        if(optionalUser.isPresent()){
+
+            return   jwtService.issueTokenEmail(email,10, ChronoUnit.MINUTES);
+        } else {
+            throw new CustomException("User does not exist",null,HttpStatus.NOT_FOUND);
+        }
+
+
+    }
+
+    public boolean isResetTokenExpired(String token) {
+        return jwtService.isTokenLinkExpired(token);
     }
 }

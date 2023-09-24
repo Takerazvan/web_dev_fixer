@@ -6,6 +6,7 @@
     import com.webdevfix.auth.AuthenticationService;
     import com.webdevfix.auth.RegisterRequest;
 
+    import com.webdevfix.exceptions.CustomException;
     import com.webdevfix.mapper.AuthenticationMapper;
     import com.webdevfix.notifications.EmailService;
     import com.webdevfix.service.LogoutService;
@@ -18,6 +19,9 @@
 
     import org.springframework.web.bind.annotation.*;
     import org.springframework.web.servlet.view.RedirectView;
+
+    import java.time.LocalDateTime;
+    import java.time.temporal.ChronoUnit;
 
     @RestController
     @RequiredArgsConstructor
@@ -55,16 +59,48 @@
                 return new RedirectView("http://localhost:3000/error");
             }
         }
-        @GetMapping("/loginWithGithub")
-        public ResponseEntity<String> loginWithGithub() {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body("You have successfully logged in with GitHub!");
-        }
+
 
         @PostMapping("/logout")
         public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
             logoutService.logout(request, response, authentication);
             System.out.println("Logout");
             return ResponseEntity.ok("Logged out successfully");
+        }
+
+
+        @PostMapping("/reset-password")
+        public ResponseEntity<?> reset(@RequestBody String email) {
+
+            try {
+                // Generate the reset password token with 10 minutes expiration
+                String resetToken = service.generateResetPasswordToken(email);
+
+                // Create the reset password link with the generated token
+
+                String resetLink = "http://localhost:9090/reset-pass-form?token=" + resetToken;
+
+                // Send the reset password email
+                LocalDateTime expirationTime = LocalDateTime.now().plus(10, ChronoUnit.MINUTES);
+                emailService.sendPasswordResetEmail(email, resetLink, expirationTime);
+
+                return ResponseEntity.ok("Email sent");
+            } catch (IllegalArgumentException e) {
+                // Handle the case where the user does not exist
+                throw new CustomException("User does not exist",null, HttpStatus.NOT_FOUND);
+            }
+        }
+        @GetMapping("/reset-pass-form")
+        public RedirectView resetForm(@RequestParam("token") String token) {
+
+
+            boolean isExpired = service.isResetTokenExpired(token);
+            if (!isExpired) {
+                return new RedirectView("http://localhost:3000/reset-password-form?token=" + token);
+            } else {
+                return new RedirectView("http://localhost:3000/reset-password");
+
+            }
+
         }
     }

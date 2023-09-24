@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,6 +103,35 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + exp))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String issueTokenEmail(String subject, long amountToAdd, TemporalUnit unit) {
+        Date expirationDate = Date.from(Instant.now().plus(amountToAdd, unit));
+
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(expirationDate)
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+    public String getSubject(String token) {
+        return getClaims(token).getSubject();
+    }
+
+    private Claims getClaims(String token) {
+        Claims claims = Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims;
+    }
+    public boolean isTokenLinkExpired(String jwt) {
+        Date expirationDate = Date.from(Instant.now().plus(10, ChronoUnit.MINUTES));
+
+        return getClaims(jwt).getExpiration().after(expirationDate);
     }
 
 }

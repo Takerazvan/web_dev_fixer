@@ -1,9 +1,6 @@
     package com.webdevfix.service;
 
-    import com.sun.jdi.request.DuplicateRequestException;
-    import com.webdevfix.auth.RegisterRequest;
     import com.webdevfix.model.PenComponent;
-    import com.webdevfix.model.Role;
     import com.webdevfix.model.User;
     import com.webdevfix.repository.UserRepository;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@
 
     import java.util.List;
     import java.util.NoSuchElementException;
+    import java.util.stream.Collectors;
 
     @Service
     public class UserService {
@@ -19,26 +17,31 @@
         private final UserRepository userRepository;
         private final PenService penComponentService;
         private final PasswordEncoder passwordEncoder;
+        private final JwtService jwtService;
 
         @Autowired
-        public UserService(UserRepository userRepository, PenService penComponentService, PasswordEncoder passwordEncoder) {
+        public UserService(UserRepository userRepository, PenService penComponentService, PasswordEncoder passwordEncoder, JwtService jwtService) {
             this.userRepository = userRepository;
             this.penComponentService = penComponentService;
             this.passwordEncoder = passwordEncoder;
+            this.jwtService = jwtService;
+
         }
 
         public List<User> getAllUsers() {
             return userRepository.findAll();
         }
 
+
         public User createUser(User user) {
             return userRepository.save(user);
         }
 
-        public User getUserById(int id) {
+        public User getUserById(Integer id) {
             return userRepository.findById(id)
                     .orElseThrow(() -> new NoSuchElementException("No user found with id: " + id));
         }
+
 
         public User updateUser(int id, User user) {
             return userRepository.findById(id)
@@ -76,16 +79,19 @@
         public List<PenComponent> getUserPenComponents(int userId) {
             return getUserById(userId).getPenComponents();
         }
-//        public User addUser(RegisterRequest registrationRequest) {
-//            String email = registrationRequest.email();
-//            if (userRepository.existsByEmail(email)) {
-//                throw new DuplicateRequestException("email already taken");
-//            }
-//
-//            User appUser = User.builder().first_name(registrationRequest.firstName()).last_name(registrationRequest.lastName()).email(registrationRequest.email()).password(passwordEncoder.encode(registrationRequest.password())).build();
-//            userRepository.save(appUser);
-//
-//
-//            return appUser;
-//        }
+        public void changePassword(String token, String newPassword) {
+            String email = jwtService.getSubject(token);
+            email = email.replace("\"", "").trim();
+            String encodedPassword = passwordEncoder.encode(newPassword);
+
+            String finalEmail = email;
+            User appUser = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new NoSuchElementException("No user found with email: " + finalEmail));
+            System.out.println("HERE"+ appUser.getPassword());
+            appUser.setPassword(encodedPassword);
+            userRepository.save(appUser);
+        }
+
+
+
     }

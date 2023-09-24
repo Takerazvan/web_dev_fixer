@@ -6,7 +6,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -18,8 +21,11 @@ public class PenService {
         return penRepository.save(pen);
     }
 
-    public PenComponent getPenById(Long id) {
-        return penRepository.findById(id).orElse(null);
+    public List<PenComponent> getPensByUserId(Integer id) {
+
+        return penRepository.findAll().stream()
+                .filter(pen -> Objects.equals(pen.getUserId().getId(), id))
+                .collect(Collectors.toList());
 
     }
 
