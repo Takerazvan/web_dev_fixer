@@ -31,13 +31,13 @@ public class S3Controller {
     }
 
     @PostMapping("/addpentoaws")
-    public ResponseEntity<Boolean> addPenToAws(@RequestBody PenComponent penRequestForm) {
+    public ResponseEntity<Boolean> addPenToAws(@RequestBody PenRequestForm penRequestForm) {
         String key = enhancedS3Service.uploadObject(penRequestForm);
         System.out.println("key="+key);
         PenComponent penComponent = new PenComponent();
-        penComponent.setTitle(penRequestForm.getTitle());
+        penComponent.setTitle(penRequestForm.title());
 
-        User user = userService.getUserById(penRequestForm.getUser().getId());
+        User user = userService.getUserById(penRequestForm.userId());
         penComponent.setUser(user);
 
         PenComponent penComponentUpdate = penService.createPen(penComponent);

@@ -100,7 +100,7 @@ public class EnhancedS3Service {
         return key;
     }
 
-    public <T> CompletableFuture<Void> putObjectToS3(T content, String key) {
+    private  <T> CompletableFuture<Void> putObjectToS3(T content, String key) {
         return CompletableFuture.runAsync(() -> {
             try {
                 byte[] contentBytes = objectMapper.writeValueAsBytes(content);

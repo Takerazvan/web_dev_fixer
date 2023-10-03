@@ -2,6 +2,7 @@ package com.webdevfix.service;
 
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.webdevfix.aws.AwsPenComponentService;
+import com.webdevfix.aws.EnhancedS3Service;
 import com.webdevfix.dto.PenDto;
 import com.webdevfix.model.PenComponent;
 import com.webdevfix.repository.PenRepository;
@@ -20,10 +21,10 @@ import java.util.stream.Collectors;
 public class PenService {
 
     private final PenRepository penRepository;
-    private final AwsPenComponentService awsPenComponentService;
+    private final EnhancedS3Service awsPenComponentService;
 
     @Autowired
-    public PenService(PenRepository penRepository, AwsPenComponentService awsPenComponentService) {
+    public PenService(PenRepository penRepository, EnhancedS3Service awsPenComponentService) {
         this.penRepository = penRepository;
         this.awsPenComponentService = awsPenComponentService;
     }
@@ -42,8 +43,7 @@ public class PenService {
                     PenDto penDto = new PenDto();
 
                     try {
-                        Object result = awsPenComponentService.fetchPenData(pen.getObjectKey());
-                        String jsonString = (String) result;
+                        String jsonString = awsPenComponentService.getEnhancedObject(pen.getObjectKey(), String.class);
                         PenComponent fetchedPen = gson.fromJson(jsonString, PenComponent.class);
 
                         penDto.setId(pen.getId());
@@ -87,7 +87,7 @@ public class PenService {
         for(PenComponent penComponent: penComponents) {
             System.out.println("reading pen"+penComponent.getId());
             try {
-                Object result = awsPenComponentService.fetchPenData(penComponent.getObjectKey());
+                Object result = awsPenComponentService.getEnhancedObject(penComponent.getObjectKey(),Object.class);
                 System.out.println("ressult=" + result);
 
 
