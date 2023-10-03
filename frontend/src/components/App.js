@@ -10,17 +10,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import LoginRegsiter from "./LoginRegsiter";
 import Register from "./Register";
-import { useSelector } from "react-redux";
+import AiComponent from "./AiComponent";
 
 import { useAuth } from "../hooks/checkAuth";
 import SendResetPasswordLink from "./SendResetPasswordLink";
 import ResetPasswordForm from "./ResetPasswordForm";
 function App() {
+  
+   const isLoggedIn = localStorage.getItem("token");
+  useAuth();
+  
 
- useAuth();
-
-  const isLoggedIn = useSelector((state) => state.loggedIn);
-
+ 
+console.log(isLoggedIn)
 
   return (
     <>
@@ -31,10 +33,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/components/buttons" element={<Test />} />
-            <Route path="/test" element={<Test />} />
+            <Route path="/editPen" element={<Test />} />
             <Route path="/login" element={<LoginRegsiter />} />
             <Route path="/register" element={<Register />} />
-
+            <Route path="/my-components" element={<MyComponents />} />
+            <Route path="/ai-component" element={<AiComponent />} />
             <Route
               path="/reset-password"
               element={<SendResetPasswordLink />}
@@ -47,11 +50,6 @@ function App() {
               <Route path="/newpen" element={<NewPen />} />
             ) : (
               <Route path="/newpen" element={<Navigate to="/login" />} />
-            )}
-            {isLoggedIn ? (
-              <Route path="/my-components" element={<MyComponents />} />
-            ) : (
-              <Route path="/my-components" element={<Navigate to="/login" />} />
             )}
           </Routes>
         </div>

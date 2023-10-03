@@ -23,11 +23,14 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_seq", allocationSize = 1)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
-    private Integer id;
+    private Long id;
 
     private String first_name, last_name, email, password;
     @Column(name = "is_verified", nullable = false)
     private boolean isVerified;
+
+    @Column(unique = true)
+    private String githubId;
 
     @Enumerated
     private Role role;
@@ -35,7 +38,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
     @ToString.Exclude
     private List<PenComponent> penComponents=new ArrayList<>();

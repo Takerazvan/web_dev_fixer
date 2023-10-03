@@ -22,8 +22,8 @@ public class PenController {
 
 
     @GetMapping("/{id}")
-    public List<PenComponent> getPen(@PathVariable("id") Long id) {
-        return penService.getPensByUserId(Math.toIntExact(id));
+    public List<PenDto> getPen(@PathVariable("id") Long id) {
+        return penService.getPensByUserId(id);
     }
 
     @GetMapping

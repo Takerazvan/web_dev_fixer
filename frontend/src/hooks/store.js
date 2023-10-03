@@ -6,8 +6,9 @@ const initialState = {
   html: "",
   css: "",
   js: "",
-  userId: null,
-  penId:null,
+  userId: "",
+  penId: "",
+  penOwner: "",
   loggedIn: false,
 };
 
@@ -22,7 +23,10 @@ const reducer = (state = initialState, action) => {
     case "UPDATE_ID":
       return { ...state, userId: action.payload };
     case "SET_LOGGED_IN":
+      console.log(initialState.loggedIn);
       return { ...state, loggedIn: action.payload };
+    case "SET_Owner":
+      return { ...state, penOwner: action.payload };
     default:
       return state;
   }

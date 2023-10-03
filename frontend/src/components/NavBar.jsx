@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 function NavBar() {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.loggedIn); //Access the loggedin state
+  const isLoggedIn = useSelector((state) => state.loggedIn); 
   const dispatch = useDispatch();
 
 
@@ -30,8 +30,10 @@ function NavBar() {
           console.log("Logout successful", response);
           localStorage.removeItem("token");
           localStorage.removeItem("userId");
-          localStorage.removeItem("userName")
+          localStorage.removeItem("userName");
+          
           dispatch({ type: "SET_LOGGED_IN", payload: false });
+         
           navigate("/");
         } else {
           console.log("Logout failed", response);
@@ -73,8 +75,7 @@ function NavBar() {
             <NavDropdown
               title={<span style={{ color: "white" }}>Components</span>}
               id="basic-nav-dropdown"
-              style={{ color: "white", textDecoration:"none" }}
-              
+              style={{ color: "white", textDecoration: "none" }}
             >
               <Link to="/components/buttons">
                 <NavDropdown.Item className="navbarButton" href="#action/3.1">
@@ -114,6 +115,20 @@ function NavBar() {
                 </button>
               </Nav.Link>
             )}
+            {isLoggedIn ? (
+              <Nav.Link as={Link} to="/ai-component" href="#link">
+                <button
+                  id="button"
+                  style={{
+                    fontSize: "16px",
+                    backgroundColor: "grey",
+                    color: "#37FF8B",
+                  }}
+                >
+                  <span>AI Tool</span>
+                </button>
+              </Nav.Link>
+            ) : (null)}
           </Nav>
           <Nav>
             {isLoggedIn ? (

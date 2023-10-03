@@ -26,7 +26,7 @@ function NewPen() {
 const setHtml = (newHtml) =>dispatch({ type: "UPDATE_HTML", payload: newHtml });
 const setCss = (newCss) => dispatch({ type: "UPDATE_CSS", payload: newCss });
 const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
-  const setId = (id) => dispatch({ type: "UPDATE_ID", payload: id });
+  
   
   const savePen = async () => {
       if (!html.trim() || !css.trim() ) {
@@ -59,11 +59,11 @@ const setJs = (newJs) => dispatch({ type: "UPDATE_JS", payload: newJs });
 
      
      if (userIdFromStorage) {
-       setId(userIdFromStorage);
+       dispatch({ type: "UPDATE_ID", payload: Number(userIdFromStorage) });
        console.log(userIdFromStorage)
      }
    }, [dispatch]);
-  
+   
   return (
     <Container className="border-none rounded-x2 overflow-hidden">
       <Row

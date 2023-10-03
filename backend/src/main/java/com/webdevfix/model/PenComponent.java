@@ -21,19 +21,30 @@ public class PenComponent {
     private Long id;
     private String title;
 
-    @Column(length = 90000)
+    @Transient
     private String js;
 
-    @Column(length = 90000)
+    @Transient
     private String html;
 
-    @Column(length = 90000)
+
+    @Transient
     private String css;
 
+    @Column(name="object_key")
+    private  String objectKey;
+
+//    @Column(name="object_key")
+//    private String objectKey;
+
+
+//  TODO SAVE TO PRIVATE BUCKET S3
 
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
-    private User userId;
+    private User user;
+
+
 }

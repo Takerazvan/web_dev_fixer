@@ -8,9 +8,24 @@ public class PenDto {
     private String css;
     private Long userId;
 
+    private  String ownerName;
+
+    private String objectKey;
+
+
+    public String getObjectKey() {
+        return objectKey;
+    }
+
+    public void setObjectKey(String objectKey) {
+        this.objectKey = objectKey;
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;
+
+
     }
 
     public void setId(Long id) {
@@ -55,5 +70,12 @@ public class PenDto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }

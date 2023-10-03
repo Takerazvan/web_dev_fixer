@@ -9,36 +9,61 @@ import Result from "./Result";
 
 export default function MyComponents() {
   const dispatch = useDispatch();
-
+ 
   const userId = useSelector((state) => state.userId);
   const [pens, setPens] = useState([]);
-const penId = useSelector((state) => state.penId);
+  console.log(pens);
+
+  const penId = useSelector((state) => state.penId);
+   console.log(penId);
+  
   const handleCardClick = (pen) => {
     dispatch({ type: "UPDATE_HTML", payload: pen.html });
     dispatch({ type: "UPDATE_CSS", payload: pen.css });
     dispatch({ type: "UPDATE_JS", payload: pen.js });
     dispatch({ type: "UPDATE_ID", payload: pen.penId });
+    dispatch({ type: "SET_Owner", payload: pen.ownerName });
+
+  
   };
   
 useEffect(() => {
   dispatch({ type: "UPDATE_USER_ID", payload: "" });
 }, [dispatch]);
 
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:9090/api/pens/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        setPens(pens.filter((pen) => pen.id !== penId));
-        window.location.href("/my-components");
-      } else {
-        console.log("Delete failed", response);
-      }
-    } catch (error) {
-      console.log("Error during delete: ", error);
-    }
-  };
+ const handleDelete = async (pen) => {
+   try {
+  
+     const responseAWS = await fetch(
+       `http://localhost:9090/aws-pens/remove?objectKey=${pen.objectKey}`,
+       {
+         method: "DELETE",
+       }
+     );
+
+     if (responseAWS.ok) {
+   
+       const responseDB = await fetch(
+         `http://localhost:9090/api/pens/${pen.id}`,
+         {
+           method: "DELETE",
+         }
+       );
+
+       if (responseDB.ok) {
+         setPens(pens.filter((p) => p.id !== pen.id));
+        
+       } else {
+         console.log("Delete from database failed", responseDB);
+       }
+     } else {
+       console.log("Delete from AWS S3 failed", responseAWS);
+     }
+   } catch (error) {
+     console.log("Error during delete: ", error);
+   }
+ };
+
 
  useEffect(() => {
    const fetchUserPens = async () => {
@@ -70,15 +95,14 @@ useEffect(() => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          minHeight: "10vh", // Adjust as per your navbar height
+          minHeight: "10vh", 
           color: "white",
-          backgroundColor: "transparent", // or any color that matches your navbar background color
+          backgroundColor: "transparent", 
         }}
       >
         {" "}
         <h1 data-text="Awesome" className="brand">
           <span className="actual-text">&nbsp;My Components&nbsp;</span>
-         
         </h1>
       </div>
       <Row xs={1} sm={2} md={2} lg={4} xl={7} className="justify-content-start">
@@ -104,7 +128,7 @@ useEffect(() => {
                 <button
                   id="test"
                   style={{ backgroundColor: "red", color: "whitesmoke" }}
-                  onClick={() => handleDelete(pen.id)}
+                  onClick={() => handleDelete(pen)}
                 >
                   Delete
                 </button>

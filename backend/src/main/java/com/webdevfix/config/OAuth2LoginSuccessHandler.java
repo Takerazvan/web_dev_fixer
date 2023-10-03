@@ -14,27 +14,45 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtService jwtUtil;
-    private final UserRepository userRepository;
+       private final UserRepository userRepository;
+
+
 
     public OAuth2LoginSuccessHandler(JwtService jwtUtil, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
+
         this.userRepository = userRepository;
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        OAuth2User user = (OAuth2User) authentication.getPrincipal();
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        Map<String, Object> attributes = oAuth2User.getAttributes();
 
-        String token = jwtUtil.generateTokenOauth(user.getName());
 
-        String userAttributesJson = new ObjectMapper().writeValueAsString(user.getAttributes());
+        String id = String.valueOf(((Map<?, ?>) attributes).get("id"));
+
+        String name = (String) attributes.get("name");
+
+
+        User user = userRepository.findByGithubId(id).orElseGet(() -> {
+            User newUser = new User();
+            newUser.setGithubId(id);
+            newUser.setLast_name(name);
+            System.out.println(newUser);
+            return userRepository.save(newUser);
+        });
+
+        String token = jwtUtil.generateTokenOauth(user.getLast_name());
+        String userAttributesJson = new ObjectMapper().writeValueAsString(attributes);
         String encodedUserAttributes = URLEncoder.encode(userAttributesJson, "UTF-8");
-        String redirectUrl = "http://localhost:3000/oauth2redirect?token=" + token + "&user=" + encodedUserAttributes;
+        String redirectUrl = "http://localhost:3000/oauth2redirect?token=" + token + "&user=" + encodedUserAttributes +  "&userId=" + user.getId();
 
         response.sendRedirect(redirectUrl);
     }

@@ -39,7 +39,7 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/**", "/error","/reset-pass","/roleusers", "/webjars/**").permitAll()
+                        .requestMatchers("/**", "/error","/reset-pass", "/webjars/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e

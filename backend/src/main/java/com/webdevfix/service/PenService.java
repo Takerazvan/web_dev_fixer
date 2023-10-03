@@ -1,5 +1,7 @@
 package com.webdevfix.service;
 
+import com.nimbusds.jose.shaded.gson.Gson;
+import com.webdevfix.aws.AwsPenComponentService;
 import com.webdevfix.dto.PenDto;
 import com.webdevfix.model.PenComponent;
 import com.webdevfix.repository.PenRepository;
@@ -7,8 +9,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -16,19 +18,51 @@ import java.util.stream.Collectors;
 
 @Service
 public class PenService {
+
+    private final PenRepository penRepository;
+    private final AwsPenComponentService awsPenComponentService;
+
     @Autowired
-    private PenRepository penRepository;
+    public PenService(PenRepository penRepository, AwsPenComponentService awsPenComponentService) {
+        this.penRepository = penRepository;
+        this.awsPenComponentService = awsPenComponentService;
+    }
+
 
     public PenComponent createPen(PenComponent pen) {
         return penRepository.save(pen);
     }
 
-    public List<PenComponent> getPensByUserId(Integer id) {
+    public List<PenDto> getPensByUserId(Long id) {
+        Gson gson = new Gson();
 
         return penRepository.findAll().stream()
-                .filter(pen -> Objects.equals(pen.getUserId().getId(), id))
-                .collect(Collectors.toList());
+                .filter(pen -> Objects.equals(pen.getUser().getId(), id))
+                .map(pen -> {
+                    PenDto penDto = new PenDto();
 
+                    try {
+                        Object result = awsPenComponentService.fetchPenData(pen.getObjectKey());
+                        String jsonString = (String) result;
+                        PenComponent fetchedPen = gson.fromJson(jsonString, PenComponent.class);
+
+                        penDto.setId(pen.getId());
+                        penDto.setTitle(pen.getTitle());
+                        penDto.setHtml(fetchedPen.getHtml());
+                        penDto.setCss(fetchedPen.getCss());
+                        penDto.setJs(fetchedPen.getJs());
+                        penDto.setUserId(pen.getUser().getId());
+                        penDto.setOwnerName(pen.getUser().getLast_name());
+                        penDto.setObjectKey(pen.getObjectKey());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException(e);
+                    }
+
+                    return penDto;
+                })
+                .collect(Collectors.toList());
     }
 
 
@@ -42,27 +76,49 @@ public class PenService {
     }
 
     public void deletePen(Long id) {
+
         penRepository.deleteById(id);
     }
 
     public List<PenDto> getAllPens() {
         List<PenComponent> penComponents = penRepository.findAll();
         List<PenDto> penDtos = new ArrayList<>();
+        System.out.println("reading all pens");
         for(PenComponent penComponent: penComponents) {
-            PenDto penDto = convertToDto(penComponent);
-            penDtos.add(penDto);
+            System.out.println("reading pen"+penComponent.getId());
+            try {
+                Object result = awsPenComponentService.fetchPenData(penComponent.getObjectKey());
+                System.out.println("ressult=" + result);
+
+
+                PenDto penDto = convertToDto(penComponent,result);
+
+                penDtos.add(penDto);
+                System.out.println("added pen"+ penDto.getId());
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+
         }
         return penDtos;
     }
 
-    public PenDto convertToDto(PenComponent penComponent) {
+    public PenDto convertToDto(PenComponent penComponent, Object result){
+        Gson g = new Gson();
+
+
+        String jsonString= (String) result;
+        PenComponent s = g.fromJson(jsonString, PenComponent.class);
         PenDto penDto = new PenDto();
         penDto.setId(penComponent.getId());
         penDto.setTitle(penComponent.getTitle());
-        penDto.setJs(penComponent.getJs());
-        penDto.setHtml(penComponent.getHtml());
-        penDto.setCss(penComponent.getCss());
-        penDto.setUserId(Long.valueOf(penComponent.getUserId().getId()));
+        penDto.setJs(s.getJs());
+        penDto.setHtml(s.getHtml());
+        penDto.setCss(s.getCss());
+        penDto.setUserId(penComponent.getUser().getId());
+        penDto.setOwnerName(penComponent.getUser().getFirst_name());
+        penDto.setObjectKey(penComponent.getObjectKey());
         return penDto;
     }
 

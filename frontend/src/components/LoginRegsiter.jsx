@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { useDispatch } from "react-redux";
+
 import "./index.css";
 import "../login.css";
 import { loginUser } from "../hooks/loginUser";
@@ -11,7 +11,7 @@ export default function LoginRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
    const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
+
   
 const handleTogglePassword = () => {
   setShowPassword(!showPassword);
@@ -27,7 +27,8 @@ const handleTogglePassword = () => {
 
      localStorage.setItem("token", token);
      localStorage.setItem("userId", userId);
-     dispatch({ type: "SET_LOGGED_IN", payload: true });
+     localStorage.setItem("loggedIn", true);
+     
      window.location.href = "http://localhost:3000/newpen";
    } catch (error) {
      console.error("Error during login:", error);

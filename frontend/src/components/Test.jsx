@@ -16,7 +16,7 @@ function Test() {
   const html = useSelector((state) => state.html);
   const css = useSelector((state) => state.css);
   const js = useSelector((state) => state.js);
-
+ const penOwner = useSelector((state) => state.penOwner);
   const [activePanel, setActivePanel] = useState("html");
 
 
@@ -64,6 +64,9 @@ function Test() {
             js={js}
             setJs={setJs}
           />
+          <h1 data-text="Awesome" className="brand mt-2">
+            <span className="actual-text">&nbsp;Created by: {penOwner}&nbsp;</span>
+          </h1>
         </Col>
       </Row>
     </Container>

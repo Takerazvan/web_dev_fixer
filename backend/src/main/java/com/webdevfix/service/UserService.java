@@ -40,13 +40,13 @@
             return userRepository.save(user);
         }
 
-        public User getUserById(Integer id) {
+        public User getUserById(Long id) {
             return userRepository.findById(id)
                     .orElseThrow(() -> new NoSuchElementException("No user found with id: " + id));
         }
 
 
-        public User updateUser(int id, User user) {
+        public User updateUser(long id, User user) {
             return userRepository.findById(id)
                     .map(existingUser -> {
                         existingUser.setFirst_name(user.getFirst_name());
@@ -59,18 +59,18 @@
                     .orElseThrow(() -> new NoSuchElementException("No user found with id: " + id));
         }
 
-        public void deleteUser(int id) {
+        public void deleteUser(long id) {
             userRepository.deleteById(id);
         }
 
-        public void addPenComponentToUser(int userId, String title, String js, String html, String css) {
+        public void addPenComponentToUser(long userId, String title, String js, String html, String css) {
             User user = getUserById(userId);
             PenComponent penComponent = PenComponent.builder()
                     .title(title)
                     .js(js)
                     .html(html)
                     .css(css)
-                    .userId(user)
+                    .user(user)
                     .build();
           user.getPenComponents().add(penComponent);
             userRepository.save(user);
@@ -79,9 +79,11 @@
         }
 
 
-        public List<PenComponent> getUserPenComponents(int userId) {
+        public List<PenComponent> getUserPenComponents(long userId) {
             return getUserById(userId).getPenComponents();
         }
+
+
         public void changePassword(String token, String newPassword) {
             String email = jwtService.getSubject(token);
             email = email.replace("\"", "").trim();

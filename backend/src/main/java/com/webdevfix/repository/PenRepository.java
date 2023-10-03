@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PenRepository extends JpaRepository<PenComponent, Long> {
 
-    @Query("SELECT p FROM PenComponent p WHERE p.userId = ?1")
+    @Query("SELECT p FROM PenComponent p WHERE p.user = ?1")
     List<PenComponent> findPensByUserId(@Param("userId") Long userId);
 }
 

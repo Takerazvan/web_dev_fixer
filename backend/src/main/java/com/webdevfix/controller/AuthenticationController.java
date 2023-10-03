@@ -90,6 +90,8 @@
                 throw new CustomException("User does not exist",null, HttpStatus.NOT_FOUND);
             }
         }
+
+
         @GetMapping("/reset-pass-form")
         public RedirectView resetForm(@RequestParam("token") String token) {
 

@@ -27,7 +27,7 @@ export default function SendResetPasswordLink() {
 
      
     } catch (error) {
-    
+    alert(error)
       console.error("Error: ", error);
     }
   };
