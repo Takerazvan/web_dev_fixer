@@ -83,18 +83,16 @@ public class PenService {
     public List<PenDto> getAllPens() {
         List<PenComponent> penComponents = penRepository.findAll();
         List<PenDto> penDtos = new ArrayList<>();
-        System.out.println("reading all pens");
+
         for(PenComponent penComponent: penComponents) {
-            System.out.println("reading pen"+penComponent.getId());
+
             try {
                 Object result = awsPenComponentService.getEnhancedObject(penComponent.getObjectKey(),Object.class);
-                System.out.println("ressult=" + result);
-
 
                 PenDto penDto = convertToDto(penComponent,result);
 
                 penDtos.add(penDto);
-                System.out.println("added pen"+ penDto.getId());
+
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);

@@ -51,7 +51,7 @@ public class S3Controller {
     public ResponseEntity<Boolean> deletePenFromAws(@RequestParam("objectKey") String objectKey) {
 
         System.out.println("objectKey="+objectKey);
-            awsPenComponentService.delete(objectKey);
+            enhancedS3Service.deleteObject(objectKey);
             return ResponseEntity.ok(true);
 
     }
