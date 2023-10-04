@@ -5,10 +5,14 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.common.contenttype.ContentType;
+import com.nimbusds.openid.connect.sdk.assurance.evidences.attachment.Content;
+import com.webdevfix.model.MimeTypes;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeType;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -106,8 +110,14 @@ public class EnhancedS3Service {
                 byte[] contentBytes = objectMapper.writeValueAsBytes(content);
                 InputStream inputStream = new ByteArrayInputStream(contentBytes);
                 ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentType(ContentType.APPLICATION_JSON.getType());
                 metadata.setContentLength(contentBytes.length);
-                s3Client.putObject(defaultBucketName, key, inputStream, metadata);
+                System.out.println("Content type: " + metadata.getContentType());
+                PutObjectRequest putObjectRequest = new PutObjectRequest(defaultBucketName, key, inputStream, metadata);
+                s3Client.putObject(putObjectRequest);
+
+
+
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("Error converting content to bytes", e);
             }

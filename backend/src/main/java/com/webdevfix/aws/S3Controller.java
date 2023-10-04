@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/aws-pens")
 public class S3Controller {
 
-    private final AwsPenComponentService awsPenComponentService;
+
 
     private final PenService penService;
 
@@ -23,8 +23,8 @@ public class S3Controller {
     private final EnhancedS3Service enhancedS3Service;
 
     @Autowired
-    public S3Controller(AwsPenComponentService awsPenComponentService, PenService penService, UserService userService, EnhancedS3Service enhancedS3Service) {
-        this.awsPenComponentService = awsPenComponentService;
+    public S3Controller(PenService penService, UserService userService, EnhancedS3Service enhancedS3Service) {
+
         this.penService = penService;
         this.userService = userService;
         this.enhancedS3Service = enhancedS3Service;
