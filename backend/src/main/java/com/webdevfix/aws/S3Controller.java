@@ -32,10 +32,12 @@ public class S3Controller {
 
     @PostMapping("/addpentoaws")
     public ResponseEntity<Boolean> addPenToAws(@RequestBody PenRequestForm penRequestForm) {
-        String key = enhancedS3Service.uploadObject(penRequestForm);
-        System.out.println("key="+key);
+        String key = enhancedS3Service.uploadWebFiles(penRequestForm);
+//        System.out.println("key="+key);
+//        System.out.println(penRequestForm);
         PenComponent penComponent = new PenComponent();
         penComponent.setTitle(penRequestForm.title());
+
 
         User user = userService.getUserById(penRequestForm.userId());
         penComponent.setUser(user);
@@ -48,10 +50,11 @@ public class S3Controller {
         return ResponseEntity.ok(true);
     }
     @DeleteMapping("/remove")
-    public ResponseEntity<Boolean> deletePenFromAws(@RequestParam("objectKey") String objectKey) {
+    public ResponseEntity<Boolean> deletePenObjects(@RequestParam("objectKey") String objectKey) {
 
         System.out.println("objectKey="+objectKey);
-            enhancedS3Service.deleteObject(objectKey);
+        System.out.println("DELETED");
+            enhancedS3Service.deletePenObjects(objectKey);
             return ResponseEntity.ok(true);
 
     }

@@ -41,25 +41,23 @@ public class PenService {
                 .filter(pen -> Objects.equals(pen.getUser().getId(), id))
                 .map(pen -> {
                     PenDto penDto = new PenDto();
-
                     try {
-                        String jsonString = awsPenComponentService.getEnhancedObject(pen.getObjectKey(), String.class);
-                        PenComponent fetchedPen = gson.fromJson(jsonString, PenComponent.class);
+                        String htmlContent = awsPenComponentService.getEnhancedObject(pen.getObjectKey() + "/index.html", String.class);
+                        String cssContent = awsPenComponentService.getEnhancedObject(pen.getObjectKey() + "/styles.css", String.class);
+                        String jsContent = awsPenComponentService.getEnhancedObject(pen.getObjectKey() + "/script.js", String.class);
 
                         penDto.setId(pen.getId());
                         penDto.setTitle(pen.getTitle());
-                        penDto.setHtml(fetchedPen.getHtml());
-                        penDto.setCss(fetchedPen.getCss());
-                        penDto.setJs(fetchedPen.getJs());
+                        penDto.setHtml(htmlContent);
+                        penDto.setCss(cssContent);
+                        penDto.setJs(jsContent);
                         penDto.setUserId(pen.getUser().getId());
                         penDto.setOwnerName(pen.getUser().getLast_name());
                         penDto.setObjectKey(pen.getObjectKey());
-
                     } catch (IOException e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);
                     }
-
                     return penDto;
                 })
                 .collect(Collectors.toList());
